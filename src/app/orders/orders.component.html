@@ -2,7 +2,7 @@
   <div class=" d-flex p-2 w-100 justify-content-center" style="overflow-y: scroll;">
 
     <div class="row w-75 h-25 container">
-      <div *ngFor="let order of ordersList"
+      <div *ngFor="let order of ordersList; let i=index"
            class="container bg-transparent p-0 border-2 border-secondary border-bottom">
         <div class="row w-100 mb-2 shadow-lg p-4 bg-body rounded">
           <div class="d-flex justify-content-between">
@@ -40,11 +40,12 @@
                     <li
                       class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom">
                       {{products.product.name}}
-                      <span class="badge badge-square bg-info">{{products.product.price}}</span>
+                      <span class="badge badge-square bg-info">{{products.amount}} x {{products.product.price}}
+                        zł = {{products.amount * products.product.price}} zł</span>
                     </li>
                   </ul>
                   <span class="badge badge-square w-100 text-end text-dark"><a
-                    class="text-info">SUMA: 40.8 zł</a></span>
+                    class="text-info">SUMA: {{orderSumList[i]}} zł</a></span>
                 </div>
               </div>
               <div class="row ">

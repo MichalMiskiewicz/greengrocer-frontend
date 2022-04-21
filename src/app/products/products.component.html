@@ -1,40 +1,58 @@
 <div class="d-flex mb-2 h-100">
   <div class=" d-flex w-100 h-100 justify-content-center"
        style="overflow-y: scroll; background-color: rgba(255,255,255,0.2)">
+    <form (ngSubmit)="addOrder()"
 
-    <div class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
-      <div class="mh-75 bg-light card card-body d-flex">
-        <p class="text-success">Koszyk</p>
+          autocomplete="off"
+          class="needs-validation"
+          id="product-form"
+          name="addProductForm"
+          novalidate>
+      <div class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
+        <!--collapse-->
+        <div class="mh-75 bg-light card card-body d-flex">
+          <p class="text-success">Koszyk</p>
 
 
-        <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
-          <div *ngFor="let productAdd of shoppingKeys"
-               class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
-               id="{{productAdd}}">
-            <div class="w-25">{{findProduct(productAdd).name}}</div>
-            <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}}
-              x {{shoppingCart.get(productAdd)}}</span>
-            <button (click)="deleteProductFromShoppingCart($any($event.target).parentElement.id)"
-                    class="btn border-0 btn-outline-success shadow-none"
-                    style="background-color: rgb(204,202,5);"
-                    type="button">
-              X
-            </button>
+          <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
+            <div *ngFor="let productAdd of shoppingKeys"
+                 class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
+                 id="{{productAdd}}">
+              <div class="w-25">{{findProduct(productAdd).name}}</div>
+              <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}} zł
+              x <span class="text-danger">{{shoppingCart.get(productAdd)}}</span></span>
+              <button (click)="deleteProductFromShoppingCart($any($event.target).parentElement.id)"
+                      class="btn border-0 btn-outline-success shadow-none"
+                      style="background-color: rgb(204,202,5);"
+                      type="button">
+                X
+              </button>
+            </div>
+            <b *ngIf="!shoppingCart.size">Pusty Koszyk</b>
           </div>
-          <b *ngIf="!shoppingCart.size">Pusty Koszyk</b>
-        </div>
 
-        <span *ngIf="shoppingCart.size" class="badge badge-square w-100 text-end text-dark mb-2">
+          <div>
+        <span class="badge badge-square w-100 text-end text-dark mb-2">
           <a class="text-info">SUMA: {{sumCart}}zł</a>
         </span>
-        <button *ngIf="shoppingCart.size"
-                class="btn border-0 btn-outline-success shadow-none"
-                style="background-color: rgb(204,202,5);"
-                type="button">Zamów
-        </button>
-      </div>
-    </div>
 
+
+            <input [(ngModel)]="newOrder.warnings" class="h-100 w-100 mb-2" disabled="disabled" id="new-order-warnings"
+                   name="warnings" placeholder="uwagi ..." type="text">
+            <input disabled="disabled" name="paymentType" placeholder="Płatność: przy odbiorze"
+                   value="przy odbiorze"><!--[(ngModel)]="newOrder.payment"-->
+            <button class="btn border-0 w-100 mt-2 btn-outline-success shadow-none" disabled="disabled"
+                    id="new-order-button"
+                    style="background-color: rgb(204,202,5);"
+                    type="submit">Zamów
+            </button>
+
+          </div>
+
+
+        </div>
+      </div>
+    </form>
 
     <div class="container p-0">
 

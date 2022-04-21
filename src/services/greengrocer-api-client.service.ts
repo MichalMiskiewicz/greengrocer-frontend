@@ -2,6 +2,7 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {NewProductDTO} from "../dto/NewProductDTO";
+import {NewOrderDTO} from "../dto/NewOrderDTO";
 
 const API_URL = 'http://localhost:8080/';
 
@@ -84,6 +85,20 @@ export class GreengrocerApiClientService {
 
   postNewProduct(newProduct: NewProductDTO): Observable<any> {
     return this.httpClient.post(API_URL + 'products/add', newProduct, {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH'
+        })
+      }
+    );
+  }
+
+  postNewOrder(newOrder: NewOrderDTO): Observable<any> {
+    return this.httpClient.post(API_URL + 'orders/add/f2a7c117-c1ab-11ec-9257-0242ac110002', newOrder, {
         responseType: 'json',
         headers: new HttpHeaders({
           'Content-Type': 'application/json',

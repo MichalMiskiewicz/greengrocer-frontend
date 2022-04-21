@@ -16,6 +16,7 @@ export class ProductsComponent implements OnInit {
   amount: number | undefined = 1;
   sumCart: any = 0.00;
   countCart: any = 0;
+  newOrder: any = {};
 
   constructor(private apiClientService: GreengrocerApiClientService) {
   }
@@ -51,9 +52,9 @@ export class ProductsComponent implements OnInit {
     // @ts-ignore
     this.sumCart = +(this.sumCart + this.findProduct(id).price).toFixed(12);
     //this.findProduct(id).price * this.amount;
-    // @ts-ignore
-    document.getElementById("cart-button").textContent = "Koszyk (" + this.countCart + ")";
-
+    document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.countCart + ")";
+    document.querySelector("#new-order-button")!.removeAttribute("disabled");
+    document.querySelector("#new-order-warnings")!.removeAttribute("disabled");
     this.shoppingKeys = this.shoppingCart.keys();
   }
 
@@ -69,6 +70,12 @@ export class ProductsComponent implements OnInit {
       }
     }
     this.countCart -= 1;
+
+    if (this.countCart === 0) {
+      document.querySelector("#new-order-button")!.setAttribute("disabled", "disabled");
+      document.querySelector("#new-order-warnings")!.setAttribute("disabled", "disabled");
+    }
+
     // @ts-ignore
     document.getElementById("cart-button").textContent = "Koszyk (" + this.countCart + ")";
     // @ts-ignore
@@ -78,6 +85,46 @@ export class ProductsComponent implements OnInit {
 
   findProduct(id: string): any {
     return this.productsList.find(((p: { productId: string; }) => p.productId == id));
+  }
+
+  addOrder(): void {
+    //console.log(this.countCart);
+    // console.log(this.newOrder);
+
+    console.log(this.shoppingCart);
+    console.log(this.shoppingCart.keys().next().value);
+    console.log(this.shoppingCart.keys().next().value);
+
+
+    this.newOrder.payment = {"name": "przy odbiorze"};
+
+    this.newOrder.products = new Array(this.shoppingCart.size);
+    let l: number = 0;
+    // @ts-ignore
+    this.shoppingCart.forEach((id: string, amount: number) => {
+      this.newOrder.products[l] = {"id": amount, "amount": id};
+      l = l + 1;
+    });
+
+
+    console.log(JSON.stringify(this.newOrder));
+
+    document.querySelector("#new-order-button")!.setAttribute("disabled", "disabled");
+    document.querySelector("#new-order-warnings")!.setAttribute("disabled", "disabled");
+    //document.getElementById("new-order-warnings")!.val(' ');
+
+
+    console.log(this.newOrder);
+    this.shoppingCart.clear();
+    this.sumCart = 0;
+    this.shoppingKeys.clear;
+    this.sumCart = 0.00;
+    this.countCart = 0;
+    this.newOrder.clear;
+    this.apiClientService.postNewOrder(this.newOrder).subscribe(order => {
+      console.log(order);
+    })
+
   }
 
 }
