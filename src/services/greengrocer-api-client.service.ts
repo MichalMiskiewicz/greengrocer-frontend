@@ -83,6 +83,20 @@ export class GreengrocerApiClientService {
     );
   }
 
+  setStatusInTheOrder(orderId: string, status: any): Observable<any> {
+    return this.httpClient.patch(API_URL + 'orders/' + orderId + '/status-change', status, {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH'
+        })
+      }
+    );
+  }
+
   postNewProduct(newProduct: NewProductDTO): Observable<any> {
     return this.httpClient.post(API_URL + 'products/add', newProduct, {
         responseType: 'json',
@@ -110,5 +124,9 @@ export class GreengrocerApiClientService {
       }
     );
   }
+
+
+
+
 
 }

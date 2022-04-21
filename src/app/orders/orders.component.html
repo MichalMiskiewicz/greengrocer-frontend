@@ -3,33 +3,37 @@
 
     <div class="row w-75 h-25 container">
       <div *ngFor="let order of ordersList; let i=index"
-           class="container bg-transparent p-0 border-2 border-secondary border-bottom">
-        <div class="row w-100 mb-2 shadow-lg p-4 bg-body rounded">
+           class="container bg-transparent p-0">
+        <div *ngIf="ifDriver && order.status != 'Doręczone' || ifAdmin"
+             class="row w-100 mb-2 shadow-lg p-4 bg-body rounded">
           <div class="d-flex justify-content-between">
-            <div class="w-auto">
-              <a class="text-success ">{{order.creationDate}}</a>
+            <div class="w-75">
+              <div class="w-auto">
+                <a class="text-success ">{{order.creationDate}}</a>
+              </div>
+              <div class="w-auto">
+                <a>{{order.createdBy.name + ' ' + order.createdBy.surname}}</a>
+              </div>
             </div>
-            <div class="w-auto">
-              <a>{{order.createdBy.name + ' ' + order.createdBy.surname}}</a>
-            </div>
-            <div class="w-25 d-flex justify-content-between">
-              <select (change)="setDriver($any($event.target).value)" *ngIf="!order.driver"
+            <div class="w-50 d-flex justify-content-end">
+              <select (change)="setDriver($any($event.target).value)" *ngIf="!order.driver && ifAdmin"
                       class="form-select w-50 mb-2">
                 <option selected>Wybierz Kierowcę</option>
                 <option *ngFor="let driver of driversList"
                         [value]="order.orderId + '|' + driver.userId">{{driver.name}}</option>
               </select>
-              <select (change)="setDriver($any($event.target).value)" class="form-select w-50 mb-2">
-                <option selected>Zmień status</option>
-                <option *ngFor="let driver of driversList"
-                        [value]="order.orderId + '|' + driver.userId">{{driver.name}}</option>
-              </select>
+              <button (click)="setOrderDelivered($any($event.target).id)" *ngIf="ifDriver"
+                      class="btn border-0 btn-outline-success shadow-none"
+                      id="{{order.orderId}}" style="background-color: rgb(204,202,5);"
+                      type="button">
+                Dostarczone
+              </button>
             </div>
           </div>
           <div [attr.aria-controls]="'id'+order.orderId"
                [attr.data-bs-target]="'#id'+order.orderId"
                aria-expanded="false"
-               class="btn w-100 p-1 mt-2 shadow-lg rounded"
+               class="btn w-50 h-25 p-1 mt-2 shadow-lg rounded"
                data-bs-toggle="collapse" style="background-color: rgb(204,202,5);">
           </div>
           <div class="collapse " id="id{{order.orderId}}">

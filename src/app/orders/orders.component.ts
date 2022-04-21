@@ -11,7 +11,11 @@ export class OrdersComponent implements OnInit {
   driversList: any = {};
   orderSum: number = 0;
   orderSumList: any = {};
+  ifDriver:boolean = true;
+  ifAdmin:boolean = false;
+  ifClient:boolean = true;
 
+  orderStatus:any = {};
   constructor(private apiClientService: GreengrocerApiClientService) {
   }
 
@@ -51,4 +55,14 @@ export class OrdersComponent implements OnInit {
       this.ngOnInit();
     });
   }
+
+  setOrderDelivered(id: string):void {
+    this.orderStatus = {"status": "Doręczone"};
+    console.log(this.orderStatus);
+    console.log(id);
+    this.apiClientService.setStatusInTheOrder(id, this.orderStatus).subscribe(did => {
+      this.ngOnInit();
+    });
+  }
+
 }
