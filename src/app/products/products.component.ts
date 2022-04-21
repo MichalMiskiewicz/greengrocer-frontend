@@ -63,7 +63,7 @@ export class ProductsComponent implements OnInit {
       // @ts-ignore
       if (this.amount > 1) {
         // @ts-ignore
-        this.shoppingCart.set(id, this.amount - 1);
+        this.shoppingCart!.set(id, this.amount - 1);
       } else {
         this.shoppingCart.delete(id);
       }
@@ -77,8 +77,7 @@ export class ProductsComponent implements OnInit {
   }
 
   findProduct(id: string): any {
-    let obj = this.productsList.find(((p: { productId: string; }) => p.productId == id));
-    return obj;
+    return this.productsList.find(((p: { productId: string; }) => p.productId == id));
   }
 
 }

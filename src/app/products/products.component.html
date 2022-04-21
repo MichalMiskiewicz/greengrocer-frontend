@@ -49,7 +49,7 @@
         <div *ngFor="let product of productsList | filter:categoryFilter" class=" card-deck m-2 text-dark"
              style="width: 33vh;">
           <div class="card" id="{{product.productId}}">
-            <img (click)="this.findProduct('s')" alt="Card image cap" class="card-img-top"
+            <img alt="Card image cap" class="card-img-top"
                  src="https://wallpapercave.com/wp/wp3106251.jpg">
             <div class="card-body">
               <h5 class="card-title">{{product.name}} - {{product.category}}</h5>

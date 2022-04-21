@@ -29,8 +29,8 @@
           <div [attr.aria-controls]="'id'+order.orderId"
                [attr.data-bs-target]="'#id'+order.orderId"
                aria-expanded="false"
-               class="btn w-100 p-1 mt-2 shadow-lg bg-info rounded"
-               data-bs-toggle="collapse">
+               class="btn w-100 p-1 mt-2 shadow-lg rounded"
+               data-bs-toggle="collapse" style="background-color: rgb(204,202,5);">
           </div>
           <div class="collapse " id="id{{order.orderId}}">
             <div class="card card-body">
@@ -51,7 +51,7 @@
                 <div class="col-6 ">{{order.warnings}}</div>
                 <div class="col-6 ">{{order.description}}</div>
               </div>
-              <div class="row bg-info">
+              <div class="row" style="background-color: rgb(204,202,5);">
                 <div *ngIf="order.driver"
                      class="col-6 border-end">{{order.driver.name + ' ' + order.driver.surname}}</div>
                 <div *ngIf="!order.driver" class="col-6 border-end">brak</div>

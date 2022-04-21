@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
-import {toNumber} from "ngx-bootstrap/timepicker/timepicker.utils";
 import {Router} from "@angular/router";
 
 @Component({
@@ -12,7 +11,7 @@ export class OrdersComponent implements OnInit {
   ordersList: any = {};
   driversList: any = {};
 
-  constructor(private apiClientService: GreengrocerApiClientService, private router: Router) { }
+  constructor(private apiClientService: GreengrocerApiClientService) { }
 
   ngOnInit(): void {
     this.getListOfOrders();

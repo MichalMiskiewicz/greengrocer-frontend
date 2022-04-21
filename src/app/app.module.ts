@@ -10,12 +10,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule} from "@angular/forms";
 import { OrdersComponent } from './orders/orders.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
+import { AddProductComponent } from './add-product/add-product.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponent,
-    OrdersComponent
+    OrdersComponent,
+    AddProductComponent
   ],
   imports: [
     BrowserModule,
