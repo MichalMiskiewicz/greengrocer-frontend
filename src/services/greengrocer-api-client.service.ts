@@ -8,43 +8,76 @@ const API_URL = 'http://localhost:8080/';
   providedIn: 'root'
 })
 export class GreengrocerApiClientService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) {
+  }
 
   getAllOrders(): Observable<any> {
-    return this.httpClient.get(API_URL + 'orders/all', {responseType: 'json',
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
-    })}
+    return this.httpClient.get(API_URL + 'orders/all', {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+        })
+      }
     );
   }
 
   getAllDrivers(): Observable<any> {
-    return this.httpClient.get(API_URL + 'users/drivers/all', {responseType: 'json',
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
-      })}
+    return this.httpClient.get(API_URL + 'users/drivers/all', {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+        })
+      }
     );
   }
 
-  setDriverInTheOrder(orderId:string, driverId: string): Observable<any>{
+  getAllProducts(): Observable<any> {
+    return this.httpClient.get(API_URL + 'products/all', {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+        })
+      }
+    );
+  }
 
-    console.log("wejszlo"+'orders/'+orderId+'/driver-set/'+driverId);
-    return this.httpClient.patch(API_URL + 'orders/'+orderId+'/driver-set/'+driverId, {responseType: 'json',
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH'
-      })}
+  getAllCategories(): Observable<any> {
+    return this.httpClient.get(API_URL + 'products/categories/all', {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE'
+        })
+      }
+    );
+  }
+
+  setDriverInTheOrder(orderId: string, driverId: string): Observable<any> {
+    return this.httpClient.patch(API_URL + 'orders/' + orderId + '/driver-set/' + driverId, {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH'
+        })
+      }
     );
   }
 }

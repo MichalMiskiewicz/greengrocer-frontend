@@ -1,55 +1,72 @@
-<!--
-<div class="d-flex flex-row mb-2 h-100">
-  <div class="p-2 w-75 bg-success">
-    <div class="row bg-danger" *ngFor="let order of ordersList">
-      <div class="col">{{order.orderId}}</div>
-      <div class="col">{{order.creationDate}}</div>
-    </div>
-  </div>
-  <div class="p-2 w-25 bg-warning">fghfg</div>
-</div>
--->
-<div class="accordion" id="accordionExample">
-  <div class="card">
-    <div class="card-header" id="headingOne">
-      <h2 class="mb-0">
-        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-          Collapsible Group Item #1
+<div class="d-flex mb-2 h-100">
+  <div class=" d-flex w-100 h-100 justify-content-center"
+       style="overflow-y: scroll; background-color: rgba(255,255,255,0.2)">
+
+    <div class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
+      <div class="mh-75 bg-light card card-body d-flex">
+        <p class="text-success">Koszyk</p>
+
+
+        <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
+          <div *ngFor="let productAdd of shoppingKeys"
+               class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
+               id="{{productAdd}}">
+            <div class="w-25">{{findProduct(productAdd).name}}</div>
+            <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}}
+              x {{shoppingCart.get(productAdd)}}</span>
+            <button (click)="deleteProductFromShoppingCart($any($event.target).parentElement.id)"
+                    class="btn border-0 btn-outline-success shadow-none"
+                    style="background-color: rgb(204,202,5);"
+                    type="button">
+              X
+            </button>
+          </div>
+          <b *ngIf="!shoppingCart.size">Pusty Koszyk</b>
+        </div>
+
+        <span *ngIf="shoppingCart.size" class="badge badge-square w-100 text-end text-dark mb-2">
+          <a class="text-info">SUMA: {{sumCart}}zł</a>
+        </span>
+        <button *ngIf="shoppingCart.size"
+                class="btn border-0 btn-outline-success shadow-none"
+                style="background-color: rgb(204,202,5);"
+                type="button">Zamów
         </button>
-      </h2>
+      </div>
     </div>
 
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+    <div class="container p-0">
+
+      <div class="w-100 m-2 d-flex justify-content-center">
+        <select [(ngModel)]="categoryFilter" class="form-select w-25">
+          <option selected>kategoria...</option>
+          <option *ngFor="let category of categoriesList">{{category.name}}</option>
+        </select>
       </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingTwo">
-      <h2 class="mb-0">
-        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Collapsible Group Item #2
-        </button>
-      </h2>
-    </div>
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
-  <div class="card">
-    <div class="card-header" id="headingThree">
-      <h2 class="mb-0">
-        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Collapsible Group Item #3
-        </button>
-      </h2>
-    </div>
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-      <div class="card-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+
+      <div class="w-100 row bg-transparent d-flex justify-content-start">
+        <div *ngFor="let product of productsList | filter:categoryFilter" class=" card-deck m-2 text-dark"
+             style="width: 33vh;">
+          <div class="card" id="{{product.productId}}">
+            <img (click)="this.findProduct('s')" alt="Card image cap" class="card-img-top"
+                 src="https://wallpapercave.com/wp/wp3106251.jpg">
+            <div class="card-body">
+              <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
+              <p class="card-text">{{product.description}}</p>
+              <p class="card-text"><small class="text-muted">
+                {{product.price}} zł | Zostało <b>{{product.amount}}</b>
+                <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
+            </div>
+            <button (click)="addProductToShoppingCart($any($event.target).parentElement.id)"
+                    class="btn border-0 btn-outline-success shadow-none"
+                    style="background-color: rgb(204,202,5);"
+                    type="button">
+              +
+            </button>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
