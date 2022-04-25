@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {NewProductDTO} from "../dto/NewProductDTO";
 import {NewOrderDTO} from "../dto/NewOrderDTO";
+import {NewUserDTO} from "../dto/NewUserDTO";
 
 const API_URL = 'http://localhost:8080/';
 
@@ -125,8 +126,19 @@ export class GreengrocerApiClientService {
     );
   }
 
-
-
+  postNewUser(newUser: NewUserDTO): Observable<any> {
+    return this.httpClient.post(API_URL + 'users/add', newUser, {
+        responseType: 'json',
+        headers: new HttpHeaders({
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Credentials': 'true',
+          'Access-Control-Allow-Headers': 'Content-Type',
+          'Access-Control-Allow-Methods': 'GET,PUT,POST,DELETE,PATCH'
+        })
+      }
+    );
+  }
 
 
 }

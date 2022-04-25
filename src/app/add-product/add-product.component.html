@@ -1,14 +1,14 @@
-<div class="container p-0 w-100 h-100" style="background-color: rgba(255,255,255,0.2);">
-  <div class="w-100 row bg-transparent d-flex justify-content-center">
+<div class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center"> <!--style="background-color: rgba(255,255,255,0.2);"-->
     <div class=" card-deck m-2 text-dark w-50">
-      <div class="card" id="ii">
+      <div class="card bg-transparent" >
         <form (ngSubmit)="addProduct()"
               autocomplete="off"
               class="needs-validation"
+              style="background-color: rgba(0,0,0,0.55)"
               id="product-form"
               name="addProductForm"
               novalidate>
-          <label class="image-upload-container btn btn-bwm bg-transparent">
+          <label class="image-upload-container btn btn-bwm text-light w-100">
             <span class="me-2">Wybierz zdjęcie</span>
             <input #imageInput accept="image/*"
                    class="bg-success"
@@ -19,15 +19,15 @@
                  src="https://andrukiewicz.elk.pl/wp-content/uploads/2014/09/brak-1-Kopia-2.jpg">
           </div>
           <div class="card-body">
-            <h5 class="card-title d-flex justify-content-between w-100">
-              <div class="w-50">
+            <h5 class="card-title d-flex justify-content-between w-100" >
+              <div class="w-50 m-2">
                 <select [(ngModel)]="newProduct.category" class="form-select" name="category">
                   <option selected>kategoria...</option>
                   <option>iiii</option>
                 </select>
               </div>
 
-              <div class="w-50">
+              <div class="w-50  m-2">
                 <select [(ngModel)]="newProduct.name" class="form-select" name="name">
                   <option selected>nazwa...</option>
                   <option>iiii</option>
@@ -35,16 +35,16 @@
               </div>
             </h5>
             <textarea [(ngModel)]="newProduct.description"
-                      class="h-100 w-100" name="comment" name="description">opis ...
+                      class="h-100 w-100  m-2" name="comment" name="description">opis ...
                                 </textarea>
             <div class="card-title d-flex justify-content-between w-100">
-              <input [(ngModel)]="newProduct.price" aria-describedby="ss" class="form-control" id="jakiesid"
+              <input [(ngModel)]="newProduct.price" aria-describedby="ss" class="form-control m-2" id="jakiesid"
                      name="price"
                      placeholder="cena" type="number">
-              <input [(ngModel)]="newProduct.amount" aria-describedby="ss" class="form-control" id="jakiesid2"
+              <input [(ngModel)]="newProduct.amount" aria-describedby="ss" class="form-control m-2" id="jakiesid2"
                      name="amount"
                      placeholder="ilość" type="number">
-              <select [(ngModel)]="newProduct.measureType" class="form-select" name="measureType">
+              <select [(ngModel)]="newProduct.measureType" class="form-select m-2" name="measureType">
                 <option>kg</option>
                 <option>sztuk</option>
               </select>
@@ -61,4 +61,3 @@
       </div>
     </div>
   </div>
-</div>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
 
 @Component({
   selector: 'app-sign-up',
@@ -6,20 +7,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
+  newUser: any = {};
 
-  constructor() { }
-
-  ngOnInit(): void {
-    this.funk();
+  constructor(private apiClientService: GreengrocerApiClientService) {
   }
 
- funk(): void {
-    'use strict'
+  ngOnInit(): void {
+    this.formValidation();
+    this.newUser.address = {};
+    this.newUser.userType = {"name": "Kierowca"};
+  }
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-   let forms = document.querySelectorAll('.needs-validation');
-
-   // Loop over them and prevent submission
+  formValidation(): void {
+    let forms = document.querySelectorAll('.needs-validation');
     Array.prototype.slice.call(forms)
       .forEach(function (form) {
         form.addEventListener('submit', function (event: { preventDefault: () => void; stopPropagation: () => void; }) {
@@ -32,5 +32,12 @@ export class SignUpComponent implements OnInit {
         }, false)
       })
   };
+
+  signUp():void {
+    console.log(JSON.stringify(this.newUser));
+    this.apiClientService.postNewUser(this.newUser).subscribe(user => {
+      console.log(user);
+    });
+  }
 
 }
