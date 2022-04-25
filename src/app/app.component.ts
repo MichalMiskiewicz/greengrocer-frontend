@@ -8,4 +8,7 @@ import {ProductsComponent} from "./products/products.component";
 })
 export class AppComponent {
   title = 'greengrocer-frontend';
+  loggedIn = true;
 }
+
+

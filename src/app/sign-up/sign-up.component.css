@@ -1,0 +1,7 @@
+form span, form button {
+  background-color: rgb(204,202,5);
+}
+
+form button {
+  border: none;
+}

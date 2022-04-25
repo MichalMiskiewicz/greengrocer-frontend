@@ -11,13 +11,17 @@ import {FormsModule} from "@angular/forms";
 import { OrdersComponent } from './orders/orders.component';
 import {Ng2SearchPipeModule} from "ng2-search-filter";
 import { AddProductComponent } from './add-product/add-product.component';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { SignInComponent } from './sign-in/sign-in.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductsComponent,
     OrdersComponent,
-    AddProductComponent
+    AddProductComponent,
+    SignUpComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,
