@@ -16,16 +16,19 @@ export class AppComponent {
   isClient: boolean = false;
   isDriver: boolean = false;
   isAdmin: boolean = false;
-  private roles: string[] = [];
+  shoppingCart = new Map<string, number>();
+  shoppingKeys: any;
+  amount: number | undefined = 1;
+  sumCart: any = 0.00;
+  countCart: any = 0;
 
-  constructor(private tokenStorageService: TokenStorageService) {
+  constructor(private tokenStorage: TokenStorageService) {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isLoggedIn = !!this.tokenStorage.getToken();
     if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      console.log(user);
+      let user = this.tokenStorage.getUser();
       if (user === 'Admin') {
         this.isAdmin = true;
       } else if (user === 'Kierowca') {
@@ -37,8 +40,7 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.tokenStorageService.signOut();
-    window.location.replace('');
+    this.tokenStorage.signOut();
   }
 }
 

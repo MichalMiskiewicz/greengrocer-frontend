@@ -37,8 +37,14 @@ export class SignInComponent implements OnInit {
     this.authService.login(this.loginDetails).subscribe({
       next: data => {
         console.log(data);
-        this.tokenStorage.saveToken(data.token.split('|')[0]);
-        this.tokenStorage.saveUser(data.token.split('|')[1]);
+        let list = data.token.split('|');
+        console.log(list);
+        this.tokenStorage.saveToken(list[0]);
+        console.log(this.tokenStorage.getToken());
+        this.tokenStorage.saveUser(list[1]);
+        console.log(this.tokenStorage.getUser());
+        this.tokenStorage.saveUserID(list[2]);
+        console.log(this.tokenStorage.getUserId());
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         window.location.replace('');
@@ -48,6 +54,8 @@ export class SignInComponent implements OnInit {
         this.isLoginFailed = true;
       }
     });
+
+
   }
 
   reloadPage(): void {

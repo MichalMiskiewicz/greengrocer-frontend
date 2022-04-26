@@ -16,15 +16,25 @@ export class GreengrocerApiClientService {
   httpOptions: any = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ` + this.tokenStorageService.getToken()
+      'Authorization': `Bearer ` + this.tokenStorage.getToken()
     })
   };
 
-  constructor(private httpClient: HttpClient, private tokenStorageService: TokenStorageService) {
+  constructor(private httpClient: HttpClient, private tokenStorage: TokenStorageService) {
   }
 
   getAllOrders(): Observable<any> {
     return this.httpClient.get(API_URL + 'orders/all', this.httpOptions
+    );
+  }
+
+  getAllClientsOrders(): Observable<any> {
+    return this.httpClient.get(API_URL + 'orders/client/' + this.tokenStorage.getUserId() + '/all', this.httpOptions
+    );
+  }
+
+  getAllDriversOrders(): Observable<any> {
+    return this.httpClient.get(API_URL + 'orders/driver/' + this.tokenStorage.getUserId() + '/all', this.httpOptions
     );
   }
 
@@ -39,13 +49,13 @@ export class GreengrocerApiClientService {
   }
 
   getAllCategories(): Observable<any> {
-    console.log(this.tokenStorageService.getToken());
+    console.log(this.tokenStorage.getToken());
     return this.httpClient.get(API_URL + 'products/categories/all', this.httpOptions
     );
   }
 
   setDriverInTheOrder(orderId: string, driverId: string): Observable<any> {
-    console.log(this.tokenStorageService.getToken());
+    console.log(this.tokenStorage.getToken());
     return this.httpClient.patch(API_URL + 'orders/' + orderId + '/driver-set/' + driverId, {}, this.httpOptions
     );
   }
@@ -61,7 +71,7 @@ export class GreengrocerApiClientService {
   }
 
   postNewOrder(newOrder: NewOrderDTO): Observable<any> {
-    return this.httpClient.post(API_URL + 'orders/add/f2a7c117-c1ab-11ec-9257-0242ac110002', newOrder, this.httpOptions
+    return this.httpClient.post(API_URL + 'orders/add/' + this.tokenStorage.getUserId(), newOrder, this.httpOptions
     );
   }
 
@@ -82,7 +92,7 @@ export class GreengrocerApiClientService {
     return this.httpClient.post(API_URL + 'products/upload', formData, {
         responseType: 'text' as 'json',
         headers: new HttpHeaders({
-          'Authorization': `Bearer ` + this.tokenStorageService.getToken()
+          'Authorization': `Bearer ` + this.tokenStorage.getToken()
         })
       }
     );

@@ -9,12 +9,12 @@
 
 
         <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
-          <div *ngFor="let productAdd of shoppingKeys"
+          <div *ngFor="let productAdd of appComponent.shoppingKeys"
                class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
                id="{{productAdd}}">
             <div class="w-25">{{findProduct(productAdd).name}}</div>
             <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}} zł
-              x <span class="text-danger">{{shoppingCart.get(productAdd)}}</span></span>
+              x <span class="text-danger">{{appComponent.shoppingCart.get(productAdd)}}</span></span>
             <button (click)="deleteProductFromShoppingCart($any($event.target).parentElement.id)"
                     class="btn border-0 btn-outline-success shadow-none"
                     style="background-color: rgb(204,202,5);"
@@ -22,10 +22,10 @@
               X
             </button>
           </div>
-          <b *ngIf="!shoppingCart.size">Pusty Koszyk</b>
+          <b *ngIf="!appComponent.shoppingCart.size">Pusty Koszyk</b>
         </div>
         <span class="badge badge-square w-100 text-end text-dark mb-2">
-          <a class="text-info">SUMA: {{sumCart}}zł</a>
+          <a class="text-info">SUMA: {{appComponent.sumCart}}zł</a>
         </span>
 
 
@@ -46,12 +46,11 @@
             </button>
 
           </form>
-
-
-
-
       </div>
     </div>
+
+
+
 
     <div class="container p-0">
 

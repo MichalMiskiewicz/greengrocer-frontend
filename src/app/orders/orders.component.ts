@@ -22,9 +22,27 @@ export class OrdersComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.tokenStorage.getUser());
     if (this.tokenStorage.getToken()) {
-      this.getListOfOrders();
-      this.getListOfDrivers();
+      switch(this.tokenStorage.getUser()) {
+        case "Admin": {
+          this.getListOfOrders();
+          this.getListOfDrivers();
+          break;
+        }
+        case "Klient": {
+          this.getListOfClientsOrders();
+          break;
+        }
+        case "Kierowca": {
+          this.getListOfDriversOrders();
+          break;
+        }
+        default: {
+          //statements;
+          break;
+        }
+      }
     }else{
       window.location.replace('');
     }
@@ -46,6 +64,40 @@ export class OrdersComponent implements OnInit {
       });
     })
   }
+
+  getListOfClientsOrders(): void {
+    this.apiClientService.getAllClientsOrders().subscribe(ordersList => {
+      this.ordersList = ordersList;
+
+      let l: number = 0;
+      this.orderSumList = new Array(this.ordersList.size);
+
+      ordersList.forEach((o: any) => {
+        this.orderSum = 0.0;
+        o.products.forEach((p: any) => {
+          this.orderSumList[l] = this.orderSum = +(this.orderSum + (p.amount * p.product.price)).toFixed(12);
+        });
+        l = l + 1;
+      });
+    })
+  }
+
+  getListOfDriversOrders(): void {
+      this.apiClientService.getAllDriversOrders().subscribe(ordersList => {
+        this.ordersList = ordersList;
+
+        let l: number = 0;
+        this.orderSumList = new Array(this.ordersList.size);
+
+        ordersList.forEach((o: any) => {
+          this.orderSum = 0.0;
+          o.products.forEach((p: any) => {
+            this.orderSumList[l] = this.orderSum = +(this.orderSum + (p.amount * p.product.price)).toFixed(12);
+          });
+          l = l + 1;
+        });
+      })
+    }
 
   getListOfDrivers(): void {
     this.apiClientService.getAllDrivers().subscribe(driversList => {

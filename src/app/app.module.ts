@@ -13,6 +13,7 @@ import {Ng2SearchPipeModule} from "ng2-search-filter";
 import { AddProductComponent } from './add-product/add-product.component';
 import { SignUpComponent } from './sign-up/sign-up.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     HttpClientModule,
     FormsModule,
     Ng2SearchPipeModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

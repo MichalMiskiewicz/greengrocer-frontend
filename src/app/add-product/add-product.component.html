@@ -10,16 +10,20 @@
             name="addProductForm"
             novalidate
             style="background-color: rgba(0,0,0,0.55)">
+
         <label class="image-upload-container btn btn-bwm text-light w-100">
           <span class="me-2">Wybierz zdjęcie</span>
           <input accept="image/*"
                  class="bg-success"
                  id="image-file"
-                 type="file">
+                 type="file" (change)="imagePreview($event)">
         </label>
-        <div class="w-100 d-flex justify-content-center">
-          <img alt="Card image cap" class="card-img-top w-50"
-               src="https://andrukiewicz.elk.pl/wp-content/uploads/2014/09/brak-1-Kopia-2.jpg">
+
+
+        <div class="w-100 d-flex justify-content-center" *ngIf="filePath && filePath !== ''">
+          <!--<img alt="Card image cap" class="card-img-top w-50"
+               src="https://andrukiewicz.elk.pl/wp-content/uploads/2014/09/brak-1-Kopia-2.jpg">-->
+          <img class="card-img-top w-50" [src]="filePath" [alt]="myForm.value.name">
         </div>
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-between w-100">

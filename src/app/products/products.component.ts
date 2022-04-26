@@ -15,11 +15,11 @@ export class ProductsComponent implements OnInit {
   categoryFilter: string = "";
   productsList: any;
   categoriesList: any;
-  shoppingCart = new Map<string, number>();
+  /*shoppingCart = new Map<string, number>();
   shoppingKeys: any;
   amount: number | undefined = 1;
   sumCart: any = 0.00;
-  countCart: any = 0;
+  countCart: any = 0;*/
   newOrder: any = {};
   appComponent:AppComponent;
 
@@ -30,15 +30,15 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
-      this.getListOfProducts();
+      this.getListOfAllProducts();
       this.getListOfCategories();
-      this.sumCart.toFixed(2);
+      this.appComponent.sumCart.toFixed(2);
     }else{
       window.location.replace('');
     }
   }
 
-  getListOfProducts(): void {
+  getListOfAllProducts(): void {
     this.apiClientService.getAllProducts().subscribe(productsList => {
       productsList.forEach((value: any, sani: Sanitizer) => {
         value.imgFileSrc = '.\\assets' + value.imgFileSrc.split('assets')[1];
@@ -47,7 +47,6 @@ export class ProductsComponent implements OnInit {
       this.productsList = productsList;
       console.log(this.productsList[0].imgFileSrc);
     });
-
   }
 
   getListOfCategories(): void {
@@ -57,38 +56,38 @@ export class ProductsComponent implements OnInit {
   }
 
   addProductToShoppingCart(id: string): void {
-    if (this.shoppingCart.has(id)) {
-      this.amount = this.shoppingCart.get(id);
-      if (this.amount != null) {
-        this.shoppingCart.set(id, this.amount + 1);
+    if (this.appComponent.shoppingCart.has(id)) {
+      this.appComponent.amount = this.appComponent.shoppingCart.get(id);
+      if (this.appComponent.amount != null) {
+        this.appComponent.shoppingCart.set(id, this.appComponent.amount + 1);
       }
     } else {
-      this.shoppingCart.set(id, 1);
+      this.appComponent.shoppingCart.set(id, 1);
     }
-    this.countCart += 1;
+    this.appComponent.countCart += 1;
     // @ts-ignore
-    this.sumCart = +(this.sumCart + this.findProduct(id).price).toFixed(12);
+    this.appComponent.sumCart = +(this.appComponent.sumCart + this.findProduct(id).price).toFixed(12);
     //this.findProduct(id).price * this.amount;
-    document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.countCart + ")";
+    document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.appComponent.countCart + ")";
     document.querySelector("#new-order-button")!.removeAttribute("disabled");
     document.querySelector("#new-order-warnings")!.removeAttribute("disabled");
-    this.shoppingKeys = this.shoppingCart.keys();
+    this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
   }
 
   deleteProductFromShoppingCart(id: string): void {
-    if (this.shoppingCart.has(id)) {
-      this.amount = this.shoppingCart.get(id);
+    if (this.appComponent.shoppingCart.has(id)) {
+      this.appComponent.amount = this.appComponent.shoppingCart.get(id);
       // @ts-ignore
-      if (this.amount > 1) {
+      if (this.appComponent.amount > 1) {
         // @ts-ignore
-        this.shoppingCart!.set(id, this.amount - 1);
+        this.appComponent.shoppingCart!.set(id, this.appComponent.amount - 1);
       } else {
-        this.shoppingCart.delete(id);
+        this.appComponent.shoppingCart.delete(id);
       }
     }
-    this.countCart -= 1;
+    this.appComponent.countCart -= 1;
 
-    if (this.countCart === 0) {
+    if (this.appComponent.countCart === 0) {
       document.querySelector("#new-order-button")!.setAttribute("disabled", "disabled");
       document.querySelector("#new-order-warnings")!.setAttribute("disabled", "disabled");
     }
@@ -96,8 +95,8 @@ export class ProductsComponent implements OnInit {
     // @ts-ignore
     document.getElementById("cart-button").textContent = "Koszyk (" + this.countCart + ")";
     // @ts-ignore
-    this.sumCart = +(this.sumCart - this.findProduct(id).price).toFixed(12);
-    this.shoppingKeys = this.shoppingCart.keys();
+    this.appComponent.sumCart = +(this.appComponent.sumCart - this.findProduct(id).price).toFixed(12);
+    this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
   }
 
   findProduct(id: string): any {
@@ -105,42 +104,27 @@ export class ProductsComponent implements OnInit {
   }
 
   addOrder(): void {
-    //console.log(this.countCart);
-    // console.log(this.newOrder);
-
-    //console.log(this.shoppingCart);
-    //console.log(this.shoppingCart.keys().next().value);
-    //console.log(this.shoppingCart.keys().next().value);
-
-
     this.newOrder.payment = {"name": "przy odbiorze"};
-
-    this.newOrder.products = new Array(this.shoppingCart.size);
+    this.newOrder.products = new Array(this.appComponent.shoppingCart.size);
     let l: number = 0;
     // @ts-ignore
-    this.shoppingCart.forEach((id: string, amount: number) => {
+    this.appComponent.shoppingCart.forEach((id: string, amount: number) => {
       this.newOrder.products[l] = {"id": amount, "amount": id};
       l = l + 1;
     });
 
-
-    //console.log(JSON.stringify(this.newOrder));
-
     document.querySelector("#new-order-button")!.setAttribute("disabled", "disabled");
     document.querySelector("#new-order-warnings")!.setAttribute("disabled", "disabled");
-    //document.getElementById("new-order-warnings")!.val(' ');
-
-
-    //console.log(this.newOrder);
-    this.shoppingCart.clear();
-    this.sumCart = 0;
-    this.shoppingKeys.clear;
-    this.sumCart = 0.00;
-    this.countCart = 0;
-    this.newOrder.clear;
+    this.appComponent.shoppingCart.clear();
+    this.appComponent.sumCart = 0;
+    this.appComponent.shoppingKeys.clear;
+    this.appComponent.sumCart = 0.00;
+    this.appComponent.countCart = 0;
+    console.log(this.newOrder);
     this.apiClientService.postNewOrder(this.newOrder).subscribe(order => {
       //console.log(order);
     })
+    this.newOrder.clear;
 
   }
 

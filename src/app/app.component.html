@@ -11,20 +11,20 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li *ngIf="isLoggedIn && isAdmin || isLoggedIn && isClient" class="nav-item">
-          <a aria-current="page" class="nav-link active text-light" href="/products">Produkty</a>
+          <a aria-current="page" class="nav-link active text-light" routerLink="/products">Produkty</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" href="/orders">Zamówienia</a>
+          <a class="nav-link text-light" routerLink="/orders">Zamówienia</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
-          <a class="nav-link text-light" href="/add-product">Nowy produkt</a>
+          <a class="nav-link text-light" routerLink="/add-product">Nowy produkt</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
-          <a class="nav-link text-light" href="/sign-up">Dodaj kierowcę</a>
+          <a class="nav-link text-light" routerLink="/sign-up">Dodaj kierowcę</a>
         </li>
       </ul>
       <button *ngIf="isLoggedIn && isClient" aria-controls="shopping-cart" aria-expanded="false"
-              class="btn border-0 btn-outline-success shadow-none"
+              class="btn border-0 btn-outline-success shadow-none me-4"
               data-bs-target="#shopping-cart"
               data-bs-toggle="collapse" id="cart-button" style="background-color: rgb(204,202,5);"
               type="button">
@@ -39,4 +39,5 @@
     </div>
   </div>
 </nav>
+
 <router-outlet></router-outlet>
