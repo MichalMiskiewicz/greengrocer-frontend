@@ -1,5 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, Sanitizer} from '@angular/core';
 import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
+import {AppComponent} from "../app.component";
+import {TokenStorageService} from "../../services/token-storage.service";
+import { DomSanitizer } from '@angular/platform-browser';
+import {sanitizeIdentifier} from "@angular/compiler";
 
 @Component({
   selector: 'app-products',
@@ -9,28 +13,41 @@ import {GreengrocerApiClientService} from "../../services/greengrocer-api-client
 
 export class ProductsComponent implements OnInit {
   categoryFilter: string = "";
-  productsList: any = {};
-  categoriesList: any = {};
+  productsList: any;
+  categoriesList: any;
   shoppingCart = new Map<string, number>();
-  shoppingKeys: any = {};
+  shoppingKeys: any;
   amount: number | undefined = 1;
   sumCart: any = 0.00;
   countCart: any = 0;
   newOrder: any = {};
+  appComponent:AppComponent;
 
-  constructor(private apiClientService: GreengrocerApiClientService) {
+  // @ts-ignore
+  constructor(private apiClientService: GreengrocerApiClientService, appComponent:AppComponent, private tokenStorage: TokenStorageService, public sanitizer:DomSanitizer) {
+    this.appComponent = appComponent;
   }
 
   ngOnInit(): void {
-    this.getListOfProducts();
-    this.getListOfCategories();
-    this.sumCart.toFixed(2);
+    if (this.tokenStorage.getToken()) {
+      this.getListOfProducts();
+      this.getListOfCategories();
+      this.sumCart.toFixed(2);
+    }else{
+      window.location.replace('');
+    }
   }
 
   getListOfProducts(): void {
     this.apiClientService.getAllProducts().subscribe(productsList => {
+      productsList.forEach((value: any, sani: Sanitizer) => {
+        value.imgFileSrc = '.\\assets' + value.imgFileSrc.split('assets')[1];
+        console.log(value.imgFileSrc);
+      });
       this.productsList = productsList;
-    })
+      console.log(this.productsList[0].imgFileSrc);
+    });
+
   }
 
   getListOfCategories(): void {
@@ -91,9 +108,9 @@ export class ProductsComponent implements OnInit {
     //console.log(this.countCart);
     // console.log(this.newOrder);
 
-    console.log(this.shoppingCart);
-    console.log(this.shoppingCart.keys().next().value);
-    console.log(this.shoppingCart.keys().next().value);
+    //console.log(this.shoppingCart);
+    //console.log(this.shoppingCart.keys().next().value);
+    //console.log(this.shoppingCart.keys().next().value);
 
 
     this.newOrder.payment = {"name": "przy odbiorze"};
@@ -107,14 +124,14 @@ export class ProductsComponent implements OnInit {
     });
 
 
-    console.log(JSON.stringify(this.newOrder));
+    //console.log(JSON.stringify(this.newOrder));
 
     document.querySelector("#new-order-button")!.setAttribute("disabled", "disabled");
     document.querySelector("#new-order-warnings")!.setAttribute("disabled", "disabled");
     //document.getElementById("new-order-warnings")!.val(' ');
 
 
-    console.log(this.newOrder);
+    //console.log(this.newOrder);
     this.shoppingCart.clear();
     this.sumCart = 0;
     this.shoppingKeys.clear;
@@ -122,7 +139,7 @@ export class ProductsComponent implements OnInit {
     this.countCart = 0;
     this.newOrder.clear;
     this.apiClientService.postNewOrder(this.newOrder).subscribe(order => {
-      console.log(order);
+      //console.log(order);
     })
 
   }

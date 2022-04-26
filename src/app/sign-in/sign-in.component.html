@@ -1,16 +1,17 @@
-<div class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
-  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75" style="background-color: rgba(0,0,0,0.55)">
+<div *ngIf="!isLoggedIn" class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
+  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75 rounded-circle" style="background-color: rgba(0,0,0,0.55)">
     <div class="text-center">
       <h3 class="text-light">Logowanie</h3>
     </div>
     <div class="p-4">
-      <form action="" class="needs-validation" novalidate>
+      <form action="" class="needs-validation" novalidate
+      (submit)="onSubmit()">
         <div class="d-flex justify-content-center w-100">
           <div class="me-4">
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-person-plus-fill text-success">Nazwa użytkownika</i></span>
-              <input class="form-control" placeholder="Nazwa użytkownika" required type="text">
+              <input [(ngModel)]="loginDetails.username" name="username" class="form-control" placeholder="Nazwa użytkownika" required type="text">
               <div class="invalid-tooltip">
                 Podaj nazwę użytkownika.
               </div>
@@ -18,7 +19,7 @@
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-key-fill text-success">Hasło</i></span>
-              <input class="form-control" placeholder="Hasło" required type="password">
+              <input [(ngModel)]="loginDetails.password" name="password" class="form-control" placeholder="Hasło" required type="password">
               <div class="invalid-tooltip">
                 Podaj hasło.
               </div>
@@ -29,7 +30,7 @@
           <button class="btn btn-outline-success mt-5 w-25" type="submit"><span></span>Zaloguj</button>
         </div>
         <p class="text-center text-light mt-3">Nie masz jeszcze u nas konta?
-          <span class="text-info bg-transparent">Zarejestruj się</span>
+          <a class="text-info bg-transparent" href="/sign-up">Zarejestruj się</a>
         </p>
       </form>
     </div>

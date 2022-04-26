@@ -1,7 +1,8 @@
-<div class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
-  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75" style="background-color: rgba(0,0,0,0.55)">
+<div *ngIf="!appComponent.isLoggedIn || appComponent.isLoggedIn && appComponent.isAdmin" class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
+  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75 rounded-circle" style="background-color: rgba(0,0,0,0.55)">
     <div class="text-center">
-      <h3 class="text-light">Tworzenie konta</h3>
+      <h3 *ngIf="!appComponent.isAdmin" class="text-light">Tworzenie konta</h3>
+      <h3 *ngIf="appComponent.isAdmin" class="text-light">Tworzenie konta kierowcy</h3>
     </div>
     <div class="p-4 d-flex justify-content-center w-100">
       <form action="" class="needs-validation" novalidate>
@@ -105,10 +106,11 @@
           </div>
         </div>
         <div class="w-100 d-flex justify-content-center mx-auto">
-          <button class="btn btn-outline-success mt-5 w-25" (click)="signUp()" type="submit"><span></span>Zarejestruj</button>
+          <button *ngIf="!appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25" (click)="signUp()" type="submit"><span></span>Zarejestruj</button>
+          <button *ngIf="appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25" (click)="signUp()" type="submit"><span></span>Dodaj</button>
         </div>
-        <p class="text-center text-light mt-3">Już masz u nas konto?
-          <span class="text-info bg-transparent">Zaloguj się</span>
+        <p *ngIf="!appComponent.isAdmin" class="text-center text-light mt-3">Już masz u nas konto?
+          <a class="text-info bg-transparent" href="/sign-in">Zaloguj się</a>
         </p>
       </form>
     </div>

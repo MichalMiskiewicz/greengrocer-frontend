@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
+import {TokenStorageService} from "../../services/token-storage.service";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-sign-up',
@@ -8,14 +10,24 @@ import {GreengrocerApiClientService} from "../../services/greengrocer-api-client
 })
 export class SignUpComponent implements OnInit {
   newUser: any = {};
+  appComponent: AppComponent;
 
-  constructor(private apiClientService: GreengrocerApiClientService) {
+  constructor(private apiClientService: GreengrocerApiClientService, private tokenStorage: TokenStorageService, appComponent: AppComponent) {
+    this.appComponent = appComponent;
   }
 
   ngOnInit(): void {
-    this.formValidation();
-    this.newUser.address = {};
-    this.newUser.userType = {"name": "Kierowca"};
+    if (!this.tokenStorage.getToken() || this.tokenStorage.getToken() && this.tokenStorage.getUser() === 'Admin') {
+      this.formValidation();
+      this.newUser.address = {};
+      if (!this.tokenStorage.getToken()) {
+        this.newUser.userType = {"name": "Klient"};
+      } else {
+        this.newUser.userType = {"name": "Kierowca"};
+      }
+    } else {
+      window.location.replace('');
+    }
   }
 
   formValidation(): void {
@@ -33,7 +45,7 @@ export class SignUpComponent implements OnInit {
       })
   };
 
-  signUp():void {
+  signUp(): void {
     console.log(JSON.stringify(this.newUser));
     this.apiClientService.postNewUser(this.newUser).subscribe(user => {
       console.log(user);

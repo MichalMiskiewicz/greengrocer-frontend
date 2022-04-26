@@ -1,4 +1,5 @@
-<nav *ngIf="loggedIn" class="navbar navbar-expand-lg navbar-light border-bottom border-1 border-success h-20" id="nav-menu"
+<nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light border-bottom border-1 border-success h-20"
+     id="nav-menu"
      style="background-color: rgba(0, 0, 0, 0.6);">
   <div class="container-fluid">
     <a class="navbar-brand  text-light" href="#">GREENGROCER</a>
@@ -9,30 +10,31 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn && isAdmin || isLoggedIn && isClient" class="nav-item">
           <a aria-current="page" class="nav-link active text-light" href="/products">Produkty</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-light" href="/orders">Zamówienia</a>
         </li>
-        <li class="nav-item">
+        <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
           <a class="nav-link text-light" href="/add-product">Nowy produkt</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-light" href="/sign-up">Rejestracja</a>
-        </li>
-      <li class="nav-item">
-          <a class="nav-link text-light" href="/sign-in">Logowanie</a>
-        </li>
-      <li class="nav-item">
-          <a class="nav-link text-light" href="">Something</a>
+        <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
+          <a class="nav-link text-light" href="/sign-up">Dodaj kierowcę</a>
         </li>
       </ul>
-      <button aria-controls="shopping-cart" aria-expanded="false" class="btn border-0 btn-outline-success shadow-none"
+      <button *ngIf="isLoggedIn && isClient" aria-controls="shopping-cart" aria-expanded="false"
+              class="btn border-0 btn-outline-success shadow-none"
               data-bs-target="#shopping-cart"
               data-bs-toggle="collapse" id="cart-button" style="background-color: rgb(204,202,5);"
               type="button">
         Koszyk (0)
+      </button>
+      <button (click)="logout()" *ngIf="isLoggedIn" aria-controls="sign-out" aria-expanded="false"
+              class="btn border-0 btn-outline-success shadow-none"
+              id="ign-out-button" style="background-color: rgb(204,202,5);"
+              type="button">
+        Sign out
       </button>
     </div>
   </div>

@@ -30,7 +30,7 @@ import { SignInComponent } from './sign-in/sign-in.component';
     RouterModule,
     HttpClientModule,
     FormsModule,
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

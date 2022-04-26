@@ -1,8 +1,8 @@
-<div class="d-flex mb-2 h-100">
+<div *ngIf="appComponent.isLoggedIn" class="d-flex mb-2 h-100">
   <div class=" d-flex w-100 h-100 justify-content-center"
-       style="overflow-y: scroll; background-color: rgba(255,255,255,0.2)">
+       style="overflow-y: scroll;">
 
-    <div class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
+    <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
       <!--collapse-->
       <div class="mh-75 bg-light card card-body d-flex">
         <p class="text-success">Koszyk</p>
@@ -55,7 +55,7 @@
 
     <div class="container p-0">
 
-      <div class="w-100 m-2 d-flex justify-content-center">
+      <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="w-100 m-2 d-flex justify-content-center">
         <select [(ngModel)]="categoryFilter" class="form-select w-25">
           <option selected>kategoria...</option>
           <option *ngFor="let category of categoriesList">{{category.name}}</option>
@@ -66,8 +66,17 @@
         <div *ngFor="let product of productsList | filter:categoryFilter" class=" card-deck m-2 text-dark"
              style="width: 33vh;">
           <div class="card" id="{{product.productId}}">
+
+
+
             <img alt="Card image cap" class="card-img-top"
-                 src="https://wallpapercave.com/wp/wp3106251.jpg">
+
+                  src="{{product.imgFileSrc}}"
+
+            /><!--[attr.src]="product.imgFileSrc.changingThisBreaksApplicationSecurity"-->
+
+
+
             <div class="card-body">
               <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
               <p class="card-text">{{product.description}}</p>
@@ -75,7 +84,7 @@
                 {{product.price}} zł | Zostało <b>{{product.amount}}</b>
                 <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
             </div>
-            <button (click)="addProductToShoppingCart($any($event.target).parentElement.id)"
+            <button *ngIf="appComponent.isLoggedIn && appComponent.isClient" (click)="addProductToShoppingCart($any($event.target).parentElement.id)"
                     class="btn border-0 btn-outline-success shadow-none"
                     style="background-color: rgb(204,202,5);"
                     type="button">

@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
+import {TokenStorageService} from "../../services/token-storage.service";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-orders',
@@ -7,21 +9,25 @@ import {GreengrocerApiClientService} from "../../services/greengrocer-api-client
   styleUrls: ['./orders.component.css']
 })
 export class OrdersComponent implements OnInit {
-  ordersList: any = {};
-  driversList: any = {};
+  ordersList: any;
+  driversList: any;
   orderSum: number = 0;
   orderSumList: any = {};
-  ifDriver:boolean = true;
-  ifAdmin:boolean = false;
-  ifClient:boolean = true;
+  appComponent:AppComponent;
 
   orderStatus:any = {};
-  constructor(private apiClientService: GreengrocerApiClientService) {
+
+  constructor(private apiClientService: GreengrocerApiClientService, appComponent:AppComponent, private tokenStorage:TokenStorageService) {
+    this.appComponent = appComponent;
   }
 
   ngOnInit(): void {
-    this.getListOfOrders();
-    this.getListOfDrivers();
+    if (this.tokenStorage.getToken()) {
+      this.getListOfOrders();
+      this.getListOfDrivers();
+    }else{
+      window.location.replace('');
+    }
   }
 
   getListOfOrders(): void {
@@ -52,17 +58,24 @@ export class OrdersComponent implements OnInit {
     let idAll = id.split('|');
     console.log(idAll[0]);
     this.apiClientService.setDriverInTheOrder(idAll[0], idAll[1]).subscribe(did => {
+      this.setOrderDelivered(idAll[0]);
       this.ngOnInit();
     });
   }
 
   setOrderDelivered(id: string):void {
-    this.orderStatus = {"status": "Doręczone"};
+    if(this.appComponent.isAdmin){
+      this.orderStatus = {"status": "W trakcie realizacji"};
+    }else {
+      this.orderStatus = {"status": "Doręczone"};
+    }
     console.log(this.orderStatus);
     console.log(id);
     this.apiClientService.setStatusInTheOrder(id, this.orderStatus).subscribe(did => {
       this.ngOnInit();
     });
   }
+
+
 
 }

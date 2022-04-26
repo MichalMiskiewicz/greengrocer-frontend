@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
+import {TokenStorageService} from "../../services/token-storage.service";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-sign-in',
@@ -7,11 +10,50 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SignInComponent implements OnInit {
 
-  constructor() { }
+  loginDetails:any ={};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  appComponent:AppComponent;
+
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, appComponent:AppComponent) {
+    this.appComponent = appComponent;
+  }
 
   ngOnInit(): void {
     this.formValidation();
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      if(this.appComponent.isAdmin || this.appComponent.isClient)
+        window.location.replace('products');
+      else{
+        window.location.replace('orders');
+      }
+    }
   }
+
+  onSubmit(): void {
+    this.authService.login(this.loginDetails).subscribe({
+      next: data => {
+        console.log(data);
+        this.tokenStorage.saveToken(data.token.split('|')[0]);
+        this.tokenStorage.saveUser(data.token.split('|')[1]);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        window.location.replace('');
+      },
+      error: err => {
+        this.errorMessage = err.error.message;
+        this.isLoginFailed = true;
+      }
+    });
+  }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
 
   formValidation(): void {
     let forms = document.querySelectorAll('.needs-validation');
