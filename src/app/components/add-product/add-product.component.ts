@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
-import {TokenStorageService} from "../../services/token-storage.service";
-import {AppComponent} from "../app.component";
+import {GreengrocerApiClientService} from "../../../services/greengrocer-api-client.service";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {AppComponent} from "../../app.component";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -47,6 +47,7 @@ export class AddProductComponent implements OnInit {
           this.newProduct.imgFileSrc = this.imgSrc;
           this.apiClientService.postNewProduct(this.newProduct).subscribe(product => {
             console.log(product);
+            window.location.replace('');
           });
         }
       },

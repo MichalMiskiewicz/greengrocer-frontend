@@ -1,7 +1,7 @@
-import {Component, OnInit, Sanitizer} from '@angular/core';
-import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
-import {AppComponent} from "../app.component";
-import {TokenStorageService} from "../../services/token-storage.service";
+import {Component, OnInit} from '@angular/core';
+import {GreengrocerApiClientService} from "../../../services/greengrocer-api-client.service";
+import {AppComponent} from "../../app.component";
+import {TokenStorageService} from "../../../services/token-storage.service";
 import {DomSanitizer} from '@angular/platform-browser';
 import {document} from "ngx-bootstrap/utils";
 
@@ -31,6 +31,7 @@ export class ProductsComponent implements OnInit {
       this.getListOfCategories();
       this.appComponent.shoppingCartActive = true;
       this.appComponent.sumCart.toFixed(2);
+
     } else {
       window.location.replace('');
     }
@@ -68,7 +69,7 @@ export class ProductsComponent implements OnInit {
           }
           this.appComponent.countCart += 1;
           // @ts-ignore
-          this.appComponent.sumCart = +(this.appComponent.sumCart + this.findProduct(id).price).toFixed(12);
+          this.appComponent.sumCart = +(this.appComponent.sumCart + this.findProduct(id).price).toFixed(2);
           document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.appComponent.countCart + ")";
           document.querySelector("#new-order-button")!.removeAttribute("disabled");
           document.querySelector("#new-order-warnings")!.removeAttribute("disabled");
@@ -109,7 +110,7 @@ export class ProductsComponent implements OnInit {
     // @ts-ignore
     document.getElementById("cart-button").textContent = "Koszyk (" + this.appComponent.countCart + ")";
     // @ts-ignore
-    this.appComponent.sumCart = +(this.appComponent.sumCart - this.findProduct(id).price).toFixed(12);
+    this.appComponent.sumCart = +(this.appComponent.sumCart - this.findProduct(id).price).toFixed(2);
     this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
   }
 
@@ -136,12 +137,14 @@ export class ProductsComponent implements OnInit {
     this.appComponent.shoppingKeys.clear;
     this.appComponent.sumCart = 0.00;
     this.appComponent.countCart = 0;
+    document.getElementById("cart-button").textContent = "Koszyk (" + this.appComponent.countCart + ")";
     warningsInput.value = "";
-    console.log(this.newOrder);
+    //console.log(this.newOrder);
     this.apiClientService.postNewOrder(this.newOrder).subscribe(order => {
       //console.log(order);
     })
     this.newOrder.clear;
+    window.location.reload();
 
   }
 

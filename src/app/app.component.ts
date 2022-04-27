@@ -31,17 +31,18 @@ export class AppComponent {
     if (this.isLoggedIn) {
       let user = this.tokenStorage.getUserType();
       console.log(user)
-      if (user === 'Admin') {
+      if (user === "Admin") {
         this.isAdmin = true;
-      } else if (user === 'Kierowca') {
+      } else if (user === "Kierowca") {
         this.isDriver = true;
-      } else if (user === 'Klient') {
+      } else if (user === "Klient") {
         this.isClient = true;
       }
     }
   }
 
   logout(): void {
+    document.getElementById("sign-out-button")!.innerText="Wylogowywanie...";
     this.tokenStorage.signOut();
   }
 }

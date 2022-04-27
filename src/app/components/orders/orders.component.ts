@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
-import {TokenStorageService} from "../../services/token-storage.service";
-import {AppComponent} from "../app.component";
+import {GreengrocerApiClientService} from "../../../services/greengrocer-api-client.service";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-orders',
@@ -47,6 +47,14 @@ export class OrdersComponent implements OnInit {
     }else{
       window.location.replace('');
     }
+
+  }
+
+  createDate(date:string):string
+  {
+    let dateSplit = date.split("T");
+    let result = dateSplit[0] + " " + dateSplit[1].split(".")[0];
+    return result.toString();
   }
 
   getListOfOrders(): void {
@@ -76,7 +84,7 @@ export class OrdersComponent implements OnInit {
       ordersList.forEach((o: any) => {
         this.orderSum = 0.0;
         o.products.forEach((p: any) => {
-          this.orderSumList[l] = this.orderSum = +(this.orderSum + (p.amount * p.product.price)).toFixed(12);
+          this.orderSumList[l] = this.orderSum = +(this.orderSum + +(p.amount * p.product.price).toFixed(2)).toFixed(2);
         });
         l = l + 1;
       });
@@ -93,7 +101,7 @@ export class OrdersComponent implements OnInit {
         ordersList.forEach((o: any) => {
           this.orderSum = 0.0;
           o.products.forEach((p: any) => {
-            this.orderSumList[l] = this.orderSum = +(this.orderSum + (p.amount * p.product.price)).toFixed(12);
+            this.orderSumList[l] = this.orderSum = +(this.orderSum + +(p.amount * p.product.price).toFixed(2)).toFixed(2);
           });
           l = l + 1;
         });

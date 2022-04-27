@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
-import {TokenStorageService} from "../../services/token-storage.service";
-import {AppComponent} from "../app.component";
+import {GreengrocerApiClientService} from "../../../services/greengrocer-api-client.service";
+import {TokenStorageService} from "../../../services/token-storage.service";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-sign-up',
@@ -16,14 +16,20 @@ export class SignUpComponent implements OnInit {
     this.appComponent = appComponent;
   }
 
+  ngAfterViewInit() {
+    if (this.tokenStorage.getToken() && this.tokenStorage.getUserType() === 'Admin' && document.getElementById("create-user")) {
+      document.getElementById("create-user")!.className = "col-md-4 col-sm-12 shadow-lg p-5 w-75";
+    }
+  }
+
   ngOnInit(): void {
-    if (!this.tokenStorage.getToken() || this.tokenStorage.getToken() && this.tokenStorage.getUser() === 'Admin') {
+    if (!this.tokenStorage.getToken() || this.tokenStorage.getToken() && this.tokenStorage.getUserType() === 'Admin') {
       this.formValidation();
       this.newUser.address = {};
       if (!this.tokenStorage.getToken()) {
-        this.newUser.userType = {"name": "Klient"};
+        this.newUser.userType = "Klient";
       } else {
-        this.newUser.userType = {"name": "Kierowca"};
+        this.newUser.userType = "Kierowca";
       }
     } else {
       window.location.replace('');
@@ -50,6 +56,9 @@ export class SignUpComponent implements OnInit {
     this.apiClientService.postNewUser(this.newUser).subscribe(user => {
       console.log(user);
     });
+    if (!this.tokenStorage.getToken()) {
+      window.location.replace('');
+    }
   }
 
 }

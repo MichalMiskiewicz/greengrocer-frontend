@@ -1,4 +1,4 @@
-<nav *ngIf="isLoggedIn" class="navbar navbar-expand-lg navbar-light border-bottom border-1 border-success h-20"
+<nav *ngIf="isLoggedIn" class="navbar navbar-expand navbar-light border-bottom border-1 border-success h-20"
      id="nav-menu"
      style="background-color: rgba(0, 0, 0, 0.6);">
   <div class="container-fluid">
@@ -16,6 +16,7 @@
         <li class="nav-item">
           <a *ngIf="isLoggedIn && isAdmin"class="nav-link text-light" routerLink="/orders">Zamówienia</a>
           <a *ngIf="isLoggedIn && isClient"class="nav-link text-light" routerLink="/orders">Historia zamówień</a>
+          <a *ngIf="isLoggedIn && isDriver"class="nav-link text-light" routerLink="/orders">Moje zlecenia</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
           <a class="nav-link text-light" routerLink="/add-product">Nowy produkt</a>
@@ -33,7 +34,7 @@
       </button>
       <button (click)="logout()" *ngIf="isLoggedIn" aria-controls="sign-out" aria-expanded="false"
               class="btn border-0 btn-outline-success shadow-none"
-              id="ign-out-button" style="background-color: rgb(204,202,5);"
+              id="sign-out-button" style="background-color: rgb(204,202,5);"
               type="button">
         Wyloguj | <b><i>{{tokenStorage.getUser()}}</i></b> |
       </button>
