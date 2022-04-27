@@ -16,19 +16,21 @@ export class AppComponent {
   isClient: boolean = false;
   isDriver: boolean = false;
   isAdmin: boolean = false;
+  shoppingCartActive: boolean = false;
   shoppingCart = new Map<string, number>();
   shoppingKeys: any;
   amount: number | undefined = 1;
   sumCart: any = 0.00;
   countCart: any = 0;
 
-  constructor(private tokenStorage: TokenStorageService) {
+  constructor(public tokenStorage: TokenStorageService) {
   }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     if (this.isLoggedIn) {
-      let user = this.tokenStorage.getUser();
+      let user = this.tokenStorage.getUserType();
+      console.log(user)
       if (user === 'Admin') {
         this.isAdmin = true;
       } else if (user === 'Kierowca') {

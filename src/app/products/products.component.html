@@ -2,7 +2,8 @@
   <div class=" d-flex w-100 h-100 justify-content-center"
        style="overflow-y: scroll;">
 
-    <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="position-absolute collapse w-25 mh-75 mt-2" id="shopping-cart" style="right: 1%; z-index: 1000;">
+    <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="position-absolute collapse w-25 mh-75 mt-2"
+         id="shopping-cart" style="right: 1%; z-index: 1000;">
       <!--collapse-->
       <div class="mh-75 bg-light card card-body d-flex">
         <p class="text-success">Koszyk</p>
@@ -10,12 +11,13 @@
 
         <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
           <div *ngFor="let productAdd of appComponent.shoppingKeys"
+
                class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
                id="{{productAdd}}">
             <div class="w-25">{{findProduct(productAdd).name}}</div>
             <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}} zł
               x <span class="text-danger">{{appComponent.shoppingCart.get(productAdd)}}</span></span>
-            <button (click)="deleteProductFromShoppingCart($any($event.target).parentElement.id)"
+            <button (click)="deleteProductFromShoppingCart($any($event.target))"
                     class="btn border-0 btn-outline-success shadow-none"
                     style="background-color: rgb(204,202,5);"
                     type="button">
@@ -25,31 +27,28 @@
           <b *ngIf="!appComponent.shoppingCart.size">Pusty Koszyk</b>
         </div>
         <span class="badge badge-square w-100 text-end text-dark mb-2">
-          <a class="text-info">SUMA: {{appComponent.sumCart}}zł</a>
+          <a class="text-info">SUMA: {{appComponent.sumCart}} zł</a>
         </span>
 
 
-          <form
-
-                autocomplete="off"
-                id="product-form"
-                name="addProductForm"
-                novalidate>
-            <input [(ngModel)]="newOrder.warnings" class="h-100 w-100 mb-2" disabled="disabled" form="product-form"
-                   id="new-order-warnings" name="warnings" placeholder="uwagi ..." type="text">
-            <input disabled="disabled" form="product-form" name="paymentType"
-                   placeholder="Płatność: przy odbiorze" value="przy odbiorze"><!--[(ngModel)]="newOrder.payment"-->
-            <button class="btn border-0 w-100 mt-2 btn-outline-success shadow-none" disabled="disabled"
-                    id="new-order-button"
-                    style="background-color: rgb(204,202,5);"
-                    type="submit" (click)="addOrder()">Zamów
-            </button>
-
-          </form>
+        <form
+          (submit)="addOrder()"
+          autocomplete="off"
+          id="product-form"
+          name="addProductForm"
+          novalidate>
+          <input class="h-100 w-100 mb-2" disabled="disabled" form="product-form"
+                 id="new-order-warnings" name="warnings" placeholder="uwagi ..." type="text">
+          <input disabled="disabled" form="product-form" name="paymentType"
+                 placeholder="Płatność: przy odbiorze" value="przy odbiorze">
+          <button class="btn border-0 w-100 mt-2 btn-outline-success shadow-none" disabled="disabled"
+                  id="new-order-button"
+                  style="background-color: rgb(204,202,5);"
+                  type="submit">Zamów
+          </button>
+        </form>
       </div>
     </div>
-
-
 
 
     <div class="container p-0">
@@ -67,24 +66,27 @@
           <div class="card" id="{{product.productId}}">
 
 
-
             <img alt="Card image cap" class="card-img-top"
 
-                  src="{{product.imgFileSrc}}"
+                 src="{{product.imgFileSrc}}"
 
             /><!--[attr.src]="product.imgFileSrc.changingThisBreaksApplicationSecurity"-->
-
 
 
             <div class="card-body">
               <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
               <p class="card-text">{{product.description}}</p>
-              <p class="card-text"><small class="text-muted">
-                {{product.price}} zł | Zostało <b>{{product.amount}}</b>
+              <p *ngIf="product.measureType.name == 'sztuk'" class="card-text"><small class="text-muted">
+                {{product.price}}zł /{{product.measureType.name}}a | Zostało <b>{{product.amount}}</b>
+                <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
+              <p *ngIf="product.measureType.name != 'sztuk'" class="card-text"><small class="text-muted">
+                {{product.price}}zł /{{product.measureType.name}} <b>|</b> Zostało <b>{{product.amount}}</b>
                 <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
             </div>
-            <button *ngIf="appComponent.isLoggedIn && appComponent.isClient" (click)="addProductToShoppingCart($any($event.target).parentElement.id)"
+            <button (click)="addProductToShoppingCart($any($event.target))"
+                    *ngIf="appComponent.isLoggedIn && appComponent.isClient"
                     class="btn border-0 btn-outline-success shadow-none"
+                    id="add-product-button{{product.productId}}"
                     style="background-color: rgb(204,202,5);"
                     type="button">
               +

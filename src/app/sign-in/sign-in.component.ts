@@ -37,14 +37,10 @@ export class SignInComponent implements OnInit {
     this.authService.login(this.loginDetails).subscribe({
       next: data => {
         console.log(data);
-        let list = data.token.split('|');
-        console.log(list);
-        this.tokenStorage.saveToken(list[0]);
-        console.log(this.tokenStorage.getToken());
-        this.tokenStorage.saveUser(list[1]);
-        console.log(this.tokenStorage.getUser());
-        this.tokenStorage.saveUserID(list[2]);
-        console.log(this.tokenStorage.getUserId());
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveUser(data.username);
+        this.tokenStorage.saveUserType(data.userType);
+        this.tokenStorage.saveUserID(data.id);
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         window.location.replace('');

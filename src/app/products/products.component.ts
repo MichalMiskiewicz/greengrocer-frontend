@@ -2,8 +2,8 @@ import {Component, OnInit, Sanitizer} from '@angular/core';
 import {GreengrocerApiClientService} from "../../services/greengrocer-api-client.service";
 import {AppComponent} from "../app.component";
 import {TokenStorageService} from "../../services/token-storage.service";
-import { DomSanitizer } from '@angular/platform-browser';
-import {sanitizeIdentifier} from "@angular/compiler";
+import {DomSanitizer} from '@angular/platform-browser';
+import {document} from "ngx-bootstrap/utils";
 
 @Component({
   selector: 'app-products',
@@ -15,16 +15,13 @@ export class ProductsComponent implements OnInit {
   categoryFilter: string = "";
   productsList: any;
   categoriesList: any;
-  /*shoppingCart = new Map<string, number>();
-  shoppingKeys: any;
-  amount: number | undefined = 1;
-  sumCart: any = 0.00;
-  countCart: any = 0;*/
+  show: boolean = true;
   newOrder: any = {};
-  appComponent:AppComponent;
+  appComponent: AppComponent;
 
   // @ts-ignore
-  constructor(private apiClientService: GreengrocerApiClientService, appComponent:AppComponent, private tokenStorage: TokenStorageService, public sanitizer:DomSanitizer) {
+  constructor(private apiClientService: GreengrocerApiClientService,
+              appComponent: AppComponent, private tokenStorage: TokenStorageService, public sanitizer: DomSanitizer) {
     this.appComponent = appComponent;
   }
 
@@ -32,20 +29,20 @@ export class ProductsComponent implements OnInit {
     if (this.tokenStorage.getToken()) {
       this.getListOfAllProducts();
       this.getListOfCategories();
+      this.appComponent.shoppingCartActive = true;
       this.appComponent.sumCart.toFixed(2);
-    }else{
+    } else {
       window.location.replace('');
     }
   }
 
+
   getListOfAllProducts(): void {
     this.apiClientService.getAllProducts().subscribe(productsList => {
-      productsList.forEach((value: any, sani: Sanitizer) => {
+      productsList.forEach((value: any) => {
         value.imgFileSrc = '.\\assets' + value.imgFileSrc.split('assets')[1];
-        console.log(value.imgFileSrc);
       });
       this.productsList = productsList;
-      console.log(this.productsList[0].imgFileSrc);
     });
   }
 
@@ -55,26 +52,43 @@ export class ProductsComponent implements OnInit {
     })
   }
 
-  addProductToShoppingCart(id: string): void {
-    if (this.appComponent.shoppingCart.has(id)) {
-      this.appComponent.amount = this.appComponent.shoppingCart.get(id);
-      if (this.appComponent.amount != null) {
-        this.appComponent.shoppingCart.set(id, this.appComponent.amount + 1);
+  addProductToShoppingCart(button: any): void {
+    let id = button.parentElement.id;
+    this.productsList.forEach((value: any) => {
+      if (value.productId === id) {
+        if (value.amount >= 1) {
+          value.amount = value.amount - 1;
+          if (this.appComponent.shoppingCart.has(id)) {
+            this.appComponent.amount = this.appComponent.shoppingCart.get(id);
+            if (this.appComponent.amount != null) {
+              this.appComponent.shoppingCart.set(id, this.appComponent.amount + 1);
+            }
+          } else {
+            this.appComponent.shoppingCart.set(id, 1);
+          }
+          this.appComponent.countCart += 1;
+          // @ts-ignore
+          this.appComponent.sumCart = +(this.appComponent.sumCart + this.findProduct(id).price).toFixed(12);
+          document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.appComponent.countCart + ")";
+          document.querySelector("#new-order-button")!.removeAttribute("disabled");
+          document.querySelector("#new-order-warnings")!.removeAttribute("disabled");
+          this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
+        }
+        if (value.amount == 0) {
+          button.setAttribute("disabled", "disabled");
+        }
       }
-    } else {
-      this.appComponent.shoppingCart.set(id, 1);
-    }
-    this.appComponent.countCart += 1;
-    // @ts-ignore
-    this.appComponent.sumCart = +(this.appComponent.sumCart + this.findProduct(id).price).toFixed(12);
-    //this.findProduct(id).price * this.amount;
-    document.querySelector("#cart-button")!.textContent = "Koszyk (" + this.appComponent.countCart + ")";
-    document.querySelector("#new-order-button")!.removeAttribute("disabled");
-    document.querySelector("#new-order-warnings")!.removeAttribute("disabled");
-    this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
+    });
   }
 
-  deleteProductFromShoppingCart(id: string): void {
+  deleteProductFromShoppingCart(button: any): void {
+    let id = button.parentElement.id;
+    this.productsList.forEach((value: any) => {
+      if (value.productId === id) {
+        value.amount = value.amount + 1;
+        document.getElementById("add-product-button" + value.productId)!.removeAttribute("disabled");
+      }
+    });
     if (this.appComponent.shoppingCart.has(id)) {
       this.appComponent.amount = this.appComponent.shoppingCart.get(id);
       // @ts-ignore
@@ -93,7 +107,7 @@ export class ProductsComponent implements OnInit {
     }
 
     // @ts-ignore
-    document.getElementById("cart-button").textContent = "Koszyk (" + this.countCart + ")";
+    document.getElementById("cart-button").textContent = "Koszyk (" + this.appComponent.countCart + ")";
     // @ts-ignore
     this.appComponent.sumCart = +(this.appComponent.sumCart - this.findProduct(id).price).toFixed(12);
     this.appComponent.shoppingKeys = this.appComponent.shoppingCart.keys();
@@ -104,6 +118,8 @@ export class ProductsComponent implements OnInit {
   }
 
   addOrder(): void {
+    let warningsInput = document.getElementById("new-order-warnings");
+    this.newOrder.warnings = warningsInput.value;
     this.newOrder.payment = {"name": "przy odbiorze"};
     this.newOrder.products = new Array(this.appComponent.shoppingCart.size);
     let l: number = 0;
@@ -120,6 +136,7 @@ export class ProductsComponent implements OnInit {
     this.appComponent.shoppingKeys.clear;
     this.appComponent.sumCart = 0.00;
     this.appComponent.countCart = 0;
+    warningsInput.value = "";
     console.log(this.newOrder);
     this.apiClientService.postNewOrder(this.newOrder).subscribe(order => {
       //console.log(order);

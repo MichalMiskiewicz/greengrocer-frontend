@@ -14,7 +14,8 @@
           <a aria-current="page" class="nav-link active text-light" routerLink="/products">Produkty</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-light" routerLink="/orders">Zamówienia</a>
+          <a *ngIf="isLoggedIn && isAdmin"class="nav-link text-light" routerLink="/orders">Zamówienia</a>
+          <a *ngIf="isLoggedIn && isClient"class="nav-link text-light" routerLink="/orders">Historia zamówień</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
           <a class="nav-link text-light" routerLink="/add-product">Nowy produkt</a>
@@ -23,7 +24,7 @@
           <a class="nav-link text-light" routerLink="/sign-up">Dodaj kierowcę</a>
         </li>
       </ul>
-      <button *ngIf="isLoggedIn && isClient" aria-controls="shopping-cart" aria-expanded="false"
+      <button *ngIf="isLoggedIn && isClient && shoppingCartActive" aria-controls="shopping-cart" aria-expanded="false"
               class="btn border-0 btn-outline-success shadow-none me-4"
               data-bs-target="#shopping-cart"
               data-bs-toggle="collapse" id="cart-button" style="background-color: rgb(204,202,5);"
@@ -34,7 +35,7 @@
               class="btn border-0 btn-outline-success shadow-none"
               id="ign-out-button" style="background-color: rgb(204,202,5);"
               type="button">
-        Sign out
+        Wyloguj | <b><i>{{tokenStorage.getUser()}}</i></b> |
       </button>
     </div>
   </div>

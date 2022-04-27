@@ -23,8 +23,9 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.tokenStorage.getUser());
+    this.appComponent.shoppingCartActive = false;
     if (this.tokenStorage.getToken()) {
-      switch(this.tokenStorage.getUser()) {
+      switch(this.tokenStorage.getUserType()) {
         case "Admin": {
           this.getListOfOrders();
           this.getListOfDrivers();
