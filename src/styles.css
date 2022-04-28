@@ -16,8 +16,20 @@ html {
 }
 
 .active {
-  background-color: rgba(0, 0, 0, 0.2) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
 
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+.nav-item {
+  border-bottom: 1px white solid;
+}
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  border-bottom: none !important;
 }
 
 body {
@@ -70,6 +82,10 @@ body {
     position: absolute;
     left: 50%;
     transform: translatex(-50%);
+  }
+
+  .row-cols-md-2 > * {
+    width: 80% !important;
   }
 }
 

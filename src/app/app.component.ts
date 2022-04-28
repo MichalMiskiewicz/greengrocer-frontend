@@ -56,6 +56,18 @@ export class AppComponent {
       })
   };
 
+  makeActive(item: any): void {
+    document.querySelectorAll(".nav-item > a")!.forEach(it => {
+      it.className = "nav-link text-light";
+      // @ts-ignore
+      it.parentElement.setAttribute("style", "border-bottom: 1px white solid;");
+      // @ts-ignore
+      it.parentElement.className = "nav-item";
+    })
+    item.className = "nav-link text-light active";
+    item.parentElement.setAttribute("style", "border-bottom: none !important;");
+  }
+
   logout(): void {
     document.getElementById("sign-out-button")!.innerText="Wylogowywanie...";
     this.tokenStorage.signOut();

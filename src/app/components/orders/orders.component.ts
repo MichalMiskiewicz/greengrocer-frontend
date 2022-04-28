@@ -13,11 +13,11 @@ export class OrdersComponent implements OnInit {
   driversList: any;
   orderSum: number = 0;
   orderSumList: any = {};
-  appComponent:AppComponent;
+  appComponent: AppComponent;
 
-  orderStatus:any = {};
+  orderStatus: any = {};
 
-  constructor(private apiClientService: GreengrocerApiClientService, appComponent:AppComponent, private tokenStorage:TokenStorageService) {
+  constructor(private apiClientService: GreengrocerApiClientService, appComponent: AppComponent, private tokenStorage: TokenStorageService) {
     this.appComponent = appComponent;
   }
 
@@ -25,17 +25,26 @@ export class OrdersComponent implements OnInit {
     console.log(this.tokenStorage.getUser());
     this.appComponent.shoppingCartActive = false;
     if (this.tokenStorage.getToken()) {
-      switch(this.tokenStorage.getUserType()) {
+      switch (this.tokenStorage.getUserType()) {
         case "Admin": {
+          document.querySelectorAll(".nav-item > a")!.item(1)!.className = "nav-link text-light active";
+          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(1)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfOrders();
           this.getListOfDrivers();
           break;
         }
         case "Klient": {
+          document.querySelectorAll(".nav-item > a")!.item(1)!.className = "nav-link text-light active";
+          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(1)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfClientsOrders();
           break;
         }
         case "Kierowca": {
+          document.querySelectorAll(".nav-item > a")!.item(0)!.className = "nav-link text-light active";
+          document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(0)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfDriversOrders();
           break;
         }
@@ -44,14 +53,14 @@ export class OrdersComponent implements OnInit {
           break;
         }
       }
-    }else{
+
+    } else {
       window.location.replace('');
     }
 
   }
 
-  createDate(date:string):string
-  {
+  createDate(date: string): string {
     let dateSplit = date.split("T");
     let result = dateSplit[0] + " " + dateSplit[1].split(".")[0];
     return result.toString();
@@ -94,21 +103,21 @@ export class OrdersComponent implements OnInit {
   }
 
   getListOfDriversOrders(): void {
-      this.apiClientService.getAllDriversOrders().subscribe(ordersList => {
-        this.ordersList = ordersList;
+    this.apiClientService.getAllDriversOrders().subscribe(ordersList => {
+      this.ordersList = ordersList;
 
-        let l: number = 0;
-        this.orderSumList = new Array(this.ordersList.size);
+      let l: number = 0;
+      this.orderSumList = new Array(this.ordersList.size);
 
-        ordersList.forEach((o: any) => {
-          this.orderSum = 0.0;
-          o.products.forEach((p: any) => {
-            this.orderSumList[l] = this.orderSum = +(this.orderSum + +(p.amount * p.product.price).toFixed(2)).toFixed(2);
-          });
-          l = l + 1;
+      ordersList.forEach((o: any) => {
+        this.orderSum = 0.0;
+        o.products.forEach((p: any) => {
+          this.orderSumList[l] = this.orderSum = +(this.orderSum + +(p.amount * p.product.price).toFixed(2)).toFixed(2);
         });
-      })
-    }
+        l = l + 1;
+      });
+    })
+  }
 
   getListOfDrivers(): void {
     this.apiClientService.getAllDrivers().subscribe(driversList => {
@@ -126,10 +135,10 @@ export class OrdersComponent implements OnInit {
     });
   }
 
-  setOrderDelivered(id: string):void {
-    if(this.appComponent.isAdmin){
+  setOrderDelivered(id: string): void {
+    if (this.appComponent.isAdmin) {
       this.orderStatus = {"status": "W trakcie realizacji"};
-    }else {
+    } else {
       this.orderStatus = {"status": "Doręczone"};
     }
     console.log(this.orderStatus);
@@ -138,7 +147,6 @@ export class OrdersComponent implements OnInit {
       this.ngOnInit();
     });
   }
-
 
 
 }

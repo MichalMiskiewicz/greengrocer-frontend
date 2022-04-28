@@ -11,34 +11,38 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="nav nav-tabs me-auto my-2 my-lg-0" style="--bs-scroll-height: 100px;">
         <li *ngIf="isLoggedIn && isAdmin || isLoggedIn && isClient" class="nav-item">
-          <a aria-current="page" class="nav-link text-light" routerLink="/products" style="border-bottom: #354e1f">Produkty</a>
+          <a (click)="makeActive($event.target)" aria-current="page" class="nav-link text-light" routerLink="/products"
+             style="border-bottom: none !important;">Produkty</a>
         </li>
         <li class="nav-item">
-          <a *ngIf="isLoggedIn && isAdmin"class="nav-link text-light" routerLink="/orders">Zamówienia</a>
-          <a *ngIf="isLoggedIn && isClient"class="nav-link text-light" routerLink="/orders">Historia zamówień</a>
-          <a *ngIf="isLoggedIn && isDriver"class="nav-link text-light" routerLink="/orders">Moje zlecenia</a>
+          <a (click)="makeActive($event.target)" *ngIf="isLoggedIn && isAdmin" class="nav-link text-light"
+             routerLink="/orders">Zamówienia</a>
+          <a (click)="makeActive($event.target)" *ngIf="isLoggedIn && isClient" class="nav-link text-light"
+             routerLink="/orders">Historia zamówień</a>
+          <a (click)="makeActive($event.target)" *ngIf="isLoggedIn && isDriver" class="nav-link text-light"
+             routerLink="/orders" style="border-bottom: none !important;">Moje zlecenia</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
-          <a class="nav-link text-light" routerLink="/add-product">Nowy produkt</a>
+          <a (click)="makeActive($event.target)" class="nav-link text-light" routerLink="/add-product">Nowy produkt</a>
         </li>
         <li *ngIf="isLoggedIn && isAdmin" class="nav-item">
-          <a class="nav-link text-light" routerLink="/sign-up">Dodaj kierowcę</a>
+          <a (click)="makeActive($event.target)" class="nav-link text-light" routerLink="/sign-up">Dodaj kierowcę</a>
         </li>
       </ul>
-      <div id="navbar-buttons" class="w-25 d-flex justify-content-center">
-      <button *ngIf="isLoggedIn && isClient && shoppingCartActive" aria-controls="shopping-cart" aria-expanded="false"
-              class="btn border-0 btn-outline-success shadow-none me-4"
-              data-bs-target="#shopping-cart"
-              data-bs-toggle="collapse" id="cart-button" style="background-color: rgb(204,202,5);"
-              type="button">
-        Koszyk (0)
-      </button>
-      <button (click)="logout()" *ngIf="isLoggedIn" aria-controls="sign-out" aria-expanded="false"
-              class="btn border-0 btn-outline-success shadow-none"
-              id="sign-out-button" style="background-color: rgb(204,202,5);"
-              type="button">
-        Wyloguj | <b><i>{{tokenStorage.getUser()}}</i></b> |
-      </button>
+      <div class="w-25 d-flex justify-content-center" id="navbar-buttons">
+        <button *ngIf="isLoggedIn && isClient && shoppingCartActive" aria-controls="shopping-cart" aria-expanded="false"
+                class="btn border-0 btn-outline-success shadow-none me-4"
+                data-bs-target="#shopping-cart"
+                data-bs-toggle="collapse" id="cart-button" style="background-color: rgb(204,202,5);"
+                type="button">
+          Koszyk (0)
+        </button>
+        <button (click)="logout()" *ngIf="isLoggedIn" aria-controls="sign-out" aria-expanded="false"
+                class="btn border-0 btn-outline-success shadow-none"
+                id="sign-out-button" style="background-color: rgb(204,202,5);"
+                type="button">
+          Wyloguj | <b><i>{{tokenStorage.getUser()}}</i></b> |
+        </button>
       </div>
     </div>
   </div>

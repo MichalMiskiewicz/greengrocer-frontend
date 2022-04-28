@@ -31,7 +31,9 @@ export class ProductsComponent implements OnInit {
       this.getListOfCategories();
       this.appComponent.shoppingCartActive = true;
       this.appComponent.sumCart.toFixed(2);
-
+      document.querySelectorAll(".nav-item > a")!.item(0)!.className = "nav-link text-light active";
+      document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important;");
+      document.querySelectorAll(".nav-item > a")!.item(0)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
     } else {
       window.location.replace('');
     }

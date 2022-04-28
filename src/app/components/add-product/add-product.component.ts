@@ -27,6 +27,10 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     if (!this.tokenStorage.getToken()) {
       window.location.replace('');
+    } else {
+      document.querySelectorAll(".nav-item > a")!.item(2)!.className = "nav-link text-light active";
+      document.querySelectorAll(".nav-item > a")!.item(2)!.setAttribute("style", "border-bottom: none !important;");
+      document.querySelectorAll(".nav-item > a")!.item(2)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
     }
   }
 

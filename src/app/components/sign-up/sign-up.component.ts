@@ -32,6 +32,11 @@ export class SignUpComponent implements OnInit {
       } else {
         this.newUser.userType = "Kierowca";
       }
+      if(this.tokenStorage.getUserType() === 'Admin'){
+        document.querySelectorAll(".nav-item > a")!.item(3)!.className = "nav-link text-light active";
+        document.querySelectorAll(".nav-item > a")!.item(3)!.setAttribute("style", "border-bottom: none !important;");
+        document.querySelectorAll(".nav-item > a")!.item(3)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
+      }
     } else {
       window.location.replace('');
     }
