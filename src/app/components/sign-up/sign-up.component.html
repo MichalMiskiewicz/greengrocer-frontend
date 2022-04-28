@@ -1,11 +1,13 @@
-<div *ngIf="!appComponent.isLoggedIn || appComponent.isLoggedIn && appComponent.isAdmin" class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
-  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75 rounded-circle" id="create-user" style="background-color: rgba(0,0,0,0.55)">
+<div *ngIf="!appComponent.isLoggedIn || appComponent.isLoggedIn && appComponent.isAdmin"
+     class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
+  <div class="col-md-4 col-sm-12 shadow-lg p-5 w-75 rounded-circle" id="create-user"
+       style="background-color: rgba(0,0,0,0.55)">
     <div class="text-center">
       <h3 *ngIf="!appComponent.isAdmin" class="text-light">Tworzenie konta</h3>
       <h3 *ngIf="appComponent.isAdmin" class="text-light">Tworzenie konta kierowcy</h3>
     </div>
     <div class="p-4 d-flex justify-content-center w-100">
-      <form action="" class="needs-validation" novalidate>
+      <form action="" class="needs-validation" id="sign-up-form" novalidate>
         <div class="d-flex justify-content-center w-100">
           <div class="me-4">
             <div class="input-group mb-3">
@@ -58,7 +60,8 @@
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-person-plus-fill text-success">Ulica</i></span>
-              <input [(ngModel)]="newUser.address.street" class="form-control" name="street" placeholder="Ulica" required
+              <input [(ngModel)]="newUser.address.street" class="form-control" name="street" placeholder="Ulica"
+                     required
                      type="text">
               <div class="invalid-tooltip">
                 Podaj ulicę.
@@ -67,7 +70,8 @@
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-person-plus-fill text-success">Numer domu</i></span>
-              <input [(ngModel)]="newUser.address.houseNumber" class="form-control" name="houseNumber" placeholder="Numer domu"
+              <input [(ngModel)]="newUser.address.houseNumber" class="form-control" name="houseNumber"
+                     placeholder="Numer domu"
                      required type="text">
               <div class="invalid-tooltip">
                 Podaj numer domu.
@@ -76,7 +80,8 @@
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-person-plus-fill text-success">Kod pocztowy</i></span>
-              <input [(ngModel)]="newUser.address.zipCode" class="form-control" name="zipCode" placeholder="Kod pocztowy"
+              <input [(ngModel)]="newUser.address.zipCode" class="form-control" name="zipCode"
+                     placeholder="Kod pocztowy"
                      required type="text">
               <div class="invalid-tooltip">
                 Podaj kod pocztowy.
@@ -92,13 +97,14 @@
               <input [(ngModel)]="newUser.eMail" class="form-control" name="eMail" placeholder="Adres e-mail"
                      required type="email">
               <div class="invalid-tooltip">
-                Podaj numer telefonu.
+                Podaj adres email.
               </div>
             </div>
             <div class="input-group mb-3">
                                     <span class="input-group-text w-50"><i
                                       class="bi bi-key-fill text-success">Hasło</i></span>
-              <input [(ngModel)]="newUser.password" class="form-control" name="password" placeholder="Hasło" required type="password">
+              <input [(ngModel)]="newUser.password" class="form-control" name="password" placeholder="Hasło" required
+                     type="password">
               <div class="invalid-tooltip">
                 Podaj hasło.
               </div>
@@ -106,8 +112,12 @@
           </div>
         </div>
         <div class="w-100 d-flex justify-content-center mx-auto">
-          <button *ngIf="!appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25" (click)="signUp()" type="submit"><span></span>Zarejestruj</button>
-          <button *ngIf="appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25" (click)="signUp()" type="submit"><span></span>Dodaj</button>
+          <button (click)="signUp()" *ngIf="!appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25"
+                  type="submit"><span></span>Zarejestruj
+          </button>
+          <button (click)="signUp()" *ngIf="appComponent.isAdmin" class="btn btn-outline-success mt-5 w-25"
+                  type="submit"><span></span>Dodaj
+          </button>
         </div>
         <p *ngIf="!appComponent.isAdmin" class="text-center text-light mt-3">Już masz u nas konto?
           <a class="text-info bg-transparent" href="/sign-in">Zaloguj się</a>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {AppComponent} from "../../app.component";
+import {document} from "ngx-bootstrap/utils";
 
 @Component({
   selector: 'app-sign-in',
@@ -21,8 +22,11 @@ export class SignInComponent implements OnInit {
     this.appComponent = appComponent;
   }
 
+  ngAfterViewInit() {
+    this.appComponent.formValidation();
+  }
+
   ngOnInit(): void {
-    this.formValidation();
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       if(this.appComponent.isAdmin || this.appComponent.isClient)
@@ -34,22 +38,24 @@ export class SignInComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.authService.login(this.loginDetails).subscribe({
-      next: data => {
-        console.log(data);
-        this.tokenStorage.saveToken(data.token);
-        this.tokenStorage.saveUser(data.username);
-        this.tokenStorage.saveUserType(data.userType);
-        this.tokenStorage.saveUserID(data.id);
-        this.isLoginFailed = false;
-        this.isLoggedIn = true;
-        window.location.replace('');
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
-        this.isLoginFailed = true;
-      }
-    });
+    if(document.getElementById("sign-in-form").checkValidity()) {
+      this.authService.login(this.loginDetails).subscribe({
+        next: data => {
+          console.log(data);
+          this.tokenStorage.saveToken(data.token);
+          this.tokenStorage.saveUser(data.username);
+          this.tokenStorage.saveUserType(data.userType);
+          this.tokenStorage.saveUserID(data.id);
+          this.isLoginFailed = false;
+          this.isLoggedIn = true;
+          window.location.replace('');
+        },
+        error: err => {
+          this.errorMessage = err.error.message;
+          this.isLoginFailed = true;
+        }
+      });
+    }
 
 
   }
@@ -57,19 +63,4 @@ export class SignInComponent implements OnInit {
   reloadPage(): void {
     window.location.reload();
   }
-
-
-  formValidation(): void {
-    let forms = document.querySelectorAll('.needs-validation');
-    Array.prototype.slice.call(forms)
-      .forEach(function (form) {
-        form.addEventListener('submit', function (event: { preventDefault: () => void; stopPropagation: () => void; }) {
-          if (!form.checkValidity()) {
-            event.preventDefault()
-            event.stopPropagation()
-          }
-          form.classList.add('was-validated')
-        }, false)
-      })
-  };
 }

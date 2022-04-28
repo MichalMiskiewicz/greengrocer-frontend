@@ -1,7 +1,7 @@
-<div *ngIf="appComponent.isLoggedIn" class="d-flex flex-row mb-2 h-100" style="background-color: rgba(0,0,0,0.1)">
-  <div class=" d-flex p-2 w-100 justify-content-center" style="overflow-y: scroll;">
+<div *ngIf="appComponent.isLoggedIn" class="d-flex flex-row mb-2 h-100">
+  <div id="order-card" class="d-flex p-2 w-100 justify-content-center" style="overflow-y: scroll;">
 
-    <div class="row w-100 h-25 container">
+    <div id="orders-container" class="row w-100 h-25 container">
       <div class="row row-cols-1 row-cols-md-2">
 
       <div *ngFor="let order of ordersList; let i=index"
@@ -50,29 +50,35 @@
             <div class="card card-body">
               <div class="row ">
                 <div class="col-14 p-0">
+                  <div style="overflow: auto; height: 80px;">
                   <ul *ngFor="let products of order.products" class="list-group w-100 m-0 p-0">
                     <li
                       class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom">
                       {{products.product.name}}
-                      <span class="badge badge-square bg-info">{{products.amount}} x {{products.product.price}}
+                      <span *ngIf="products.product.measureType.name == 'sztuk'" class="badge badge-square bg-info slide-in-right text-end" style="width: auto;">{{products.amount + ' szt. x ' + products.product.price}}
+                        zł = {{products.amount * products.product.price}} zł</span>
+                   <span *ngIf="products.product.measureType.name != 'sztuk'" class="badge badge-square bg-info slide-in-right text-end" style="width: auto;">{{products.amount + ' ' + products.product.measureType.name + ' x ' + products.product.price}}
                         zł = {{products.amount * products.product.price}} zł</span>
                     </li>
                   </ul>
+                  </div>
+                  <div style="height: 20%;">
                   <span class="badge badge-square w-100 text-end text-dark"><a
-                    class="text-info">SUMA: {{orderSumList[i]}} zł</a></span>
+                    class="text-info"><h4>SUMA: {{orderSumList[i]}} zł</h4></a></span>
+                  </div>
                 </div>
               </div>
-              <div class="row ">
-                <div class="col-6 ">{{order.warnings}}</div>
-                <div class="col-6 ">{{order.description}}</div>
+              <div class="row "style="height: 50%;">
+                <div *ngIf="order.warnings" class="col-12 text-danger fw-bold">{{order.warnings}}</div>
+                <div *ngIf="!order.warnings" class="col-12 ">brak uwag</div>
               </div>
               <div class="row" style="background-color: rgb(204,202,5);">
                 <div *ngIf="order.driver"
-                     class="col-6 border-end">{{order.driver.name + ' ' + order.driver.surname}}</div>
-                <div *ngIf="!order.driver" class="col-6 border-end">brak</div>
+                     class="col-4 border-end">{{order.driver.name + ' ' + order.driver.surname}}</div>
+                <div *ngIf="!order.driver" class="col-4 border-end">brak</div>
                 <div class="col-3 border-end">{{order.payment.name}}</div>
-                <div *ngIf="order.status" class="col-3 border-end">{{order.status}}</div>
-                <div *ngIf="!order.status" class="col-3">brak statusu</div>
+                <div *ngIf="order.status" class="col-5">{{order.status}}</div>
+                <div *ngIf="!order.status" class="col-5">brak statusu</div>
               </div>
             </div>
           </div>

@@ -1,7 +1,6 @@
 <div *ngIf="appComponent.isLoggedIn && appComponent.isAdmin"
      class="container d-flex p-0 w-100 h-100 align-items-center justify-content-center">
-  <!--style="background-color: rgba(255,255,255,0.2);"-->
-  <div class=" card-deck m-2 text-dark w-50">
+  <div class=" card-deck m-2 text-dark w-50" id="add-product-form">
     <div class="card bg-transparent">
       <form (ngSubmit)="addProduct()"
             autocomplete="off"
@@ -10,20 +9,15 @@
             name="addProductForm"
             novalidate
             style="background-color: rgba(0,0,0,0.55)">
-
         <label class="image-upload-container btn btn-bwm text-light w-100">
           <span class="me-2">Wybierz zdjęcie</span>
-          <input accept="image/*"
+          <input (change)="imagePreview($event)"
+                 accept="image/*"
                  class="bg-success"
-                 id="image-file"
-                 type="file" (change)="imagePreview($event)">
+                 id="image-file" type="file">
         </label>
-
-
-        <div class="w-100 d-flex justify-content-center" *ngIf="filePath && filePath !== ''">
-          <!--<img alt="Card image cap" class="card-img-top w-50"
-               src="https://andrukiewicz.elk.pl/wp-content/uploads/2014/09/brak-1-Kopia-2.jpg">-->
-          <img class="card-img-top w-50" [src]="filePath" [alt]="myForm.value.name">
+        <div *ngIf="filePath && filePath !== ''" class="w-100 d-flex justify-content-center">
+          <img [alt]="myForm.value.name" [src]="filePath" class="card-img-top w-50">
         </div>
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-between w-100">
@@ -33,7 +27,6 @@
                 <option></option>
               </select>
             </div>
-
             <div class="w-50  m-2">
               <select [(ngModel)]="newProduct.name" class="form-select" name="name">
                 <option selected>Czosnek pospolity</option>
@@ -63,7 +56,6 @@
           type="submit">
           +
         </button>
-
       </form>
     </div>
   </div>

@@ -67,11 +67,12 @@ export class OrdersComponent implements OnInit {
       ordersList.forEach((o: any) => {
         this.orderSum = 0.0;
         o.products.forEach((p: any) => {
-          this.orderSumList[l] = this.orderSum = +(this.orderSum + (p.amount * p.product.price)).toFixed(12);
+          this.orderSumList[l] = this.orderSum = +(this.orderSum + +(p.amount * p.product.price).toFixed(2)).toFixed(2);
         });
         l = l + 1;
       });
     })
+
   }
 
   getListOfClientsOrders(): void {
@@ -89,6 +90,7 @@ export class OrdersComponent implements OnInit {
         l = l + 1;
       });
     })
+
   }
 
   getListOfDriversOrders(): void {

@@ -1,8 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
-html{
+html {
   height: 100%;
   width: 100%;
 }
+
 @media (min-width: 768px) {
   .navbar-nav.navbar-center {
     position: absolute;
@@ -10,6 +11,104 @@ html{
     transform: translatex(-50%);
   }
 }
+
+@media screen and (max-width: 820px) {
+  html {
+    height: auto;
+    min-height: 100%;
+    min-width: 100%;
+    width: fit-content;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  #product-container {
+    width: 90%;
+  }
+
+  #products {
+    overflow-y: hidden !important;
+  }
+
+  #select-category {
+    width: 60% !important;
+  }
+
+  #orders-container.row {
+    margin: 0;
+    padding: 0;
+  }
+
+  #orders-container {
+
+  }
+
+  #order-card {
+    padding: 0 !important;
+  }
+
+  html:has(>#signin-container) {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: auto;
+
+  }
+
+  #add-product-form {
+    width: 100% !important;
+  }
+
+  #create-user, #login-user {
+    width: 100% !important;
+    padding: 3rem 0 0 0 !important;
+    border-radius: 0 !important;
+  }
+
+  #create-user > div > form > div > div > div > span, #login-user > div > form > div > div > div > span {
+    width: 0 !important;
+  }
+
+  #create-user > div > form > div > div > div > span > i, #login-user > div > form > div > div > div > span > i {
+    color: rgb(204, 202, 5) !important;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: black white;
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: #57731f;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    /*background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+    background-color: #354e1f;
+    border-radius: 5px;
+    /*border: 2px solid transparent;*/
+  }
+
+}
+
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 body {
   /*background-color: rgb(204,202,5);
   background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
@@ -23,11 +122,28 @@ body {
   height: 90.9%;
 }
 
-#nav-menu{
+#nav-menu {
   height: 10%;
 }
-.collapse{
 
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: black white;
 }
 
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
 
+*::-webkit-scrollbar-track {
+  background-color: #57731f;
+}
+
+*::-webkit-scrollbar-thumb {
+  /*background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+  background-color: #354e1f;
+  border-radius: 5px;
+  /*border: 2px solid transparent;*/
+}

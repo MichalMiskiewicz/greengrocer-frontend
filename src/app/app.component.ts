@@ -41,6 +41,21 @@ export class AppComponent {
     }
   }
 
+  formValidation(): void {
+    let forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event: { preventDefault: () => void; stopPropagation: () => void; }) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+          /*document.getElementById("sign-in-button")!.setAttribute("disabled", "disabled")*/
+        }, false)
+      })
+  };
+
   logout(): void {
     document.getElementById("sign-out-button")!.innerText="Wylogowywanie...";
     this.tokenStorage.signOut();

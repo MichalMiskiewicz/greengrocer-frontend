@@ -1,81 +1,72 @@
 <div *ngIf="appComponent.isLoggedIn" class="d-flex mb-2 h-100">
-  <div class=" d-flex w-100 h-100 justify-content-center"
+  <div class=" d-flex w-100 h-100 justify-content-center" id="products"
        style="overflow-y: scroll;">
-
     <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="position-absolute collapse w-25 mh-75 mt-2"
          id="shopping-cart" style="right: 1%; z-index: 1000;">
-      <!--collapse-->
-
       <div class="row row-cols-1 row-cols-md-1">
-      <div class="col mb-4">
-      <div class="mh-75 bg-light card card-body d-flex">
-        <p class="text-success">Koszyk</p>
-
-
-        <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
-          <div *ngFor="let productAdd of appComponent.shoppingKeys"
-
-               class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
-               id="{{productAdd}}">
-            <div class="w-25">{{findProduct(productAdd).name}}</div>
-            <span class="badge badge-square bg-info w-25">{{findProduct(productAdd).price}} zł
-              x <span class="text-danger">{{appComponent.shoppingCart.get(productAdd)}}</span></span>
-            <button (click)="deleteProductFromShoppingCart($any($event.target))"
-                    class="btn border-0 btn-outline-success shadow-none"
-                    style="background-color: rgb(204,202,5);"
-                    type="button">
-              X
-            </button>
-          </div>
-          <b *ngIf="!appComponent.shoppingCart.size">Pusty Koszyk</b>
-        </div>
-        <span class="badge badge-square w-100 text-end text-dark mb-2">
+        <div class="col mb-4">
+          <div class="mh-75 bg-light card card-body d-flex">
+            <p class="text-success">Koszyk</p>
+            <div class="h-50 mb-2" style="max-height: 25vh; overflow-y: scroll;">
+              <div *ngFor="let productAdd of appComponent.shoppingKeys"
+                   class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom w-100 h-25"
+                   id="{{productAdd}}">
+                <div class="w-50">{{findProduct(productAdd).name}}</div>
+                <span class="badge badge-square bg-info w-50">{{findProduct(productAdd).price}} zł
+              x <span class="text-danger">{{appComponent.shoppingCart.get(productAdd)}}
+                    <span *ngIf="findProduct(productAdd).measureType.name == 'kg'"
+                          class="text-light">{{' ' + findProduct(productAdd).measureType.name}}</span>
+                <span *ngIf="findProduct(productAdd).measureType.name != 'kg'" class="text-light"> szt.</span>
+              </span>
+            </span>
+                <button (click)="deleteProductFromShoppingCart($any($event.target))"
+                        class="btn border-0 btn-outline-success shadow-none ms-1"
+                        style="background-color: rgb(204,202,5);"
+                        type="button">
+                  X
+                </button>
+              </div>
+              <b *ngIf="!appComponent.shoppingCart.size">Pusty Koszyk</b>
+            </div>
+            <span class="badge badge-square w-100 text-end text-dark mb-2">
           <a class="text-info">SUMA: {{appComponent.sumCart}} zł</a>
         </span>
-
-
-        <form
-          (submit)="addOrder()"
-          autocomplete="off"
-          id="product-form"
-          name="addProductForm"
-          novalidate>
-          <input class="h-100 w-100 mb-2" disabled="disabled" form="product-form"
-                 id="new-order-warnings" name="warnings" placeholder="uwagi ..." type="text">
-          <input disabled="disabled" form="product-form" name="paymentType"
-                 placeholder="Płatność: przy odbiorze" value="przy odbiorze">
-          <button class="btn border-0 w-100 mt-2 btn-outline-success shadow-none" disabled="disabled"
-                  id="new-order-button"
-                  style="background-color: rgb(204,202,5);"
-                  type="submit">Zamów
-          </button>
-        </form>
+            <form
+              (submit)="addOrder()"
+              autocomplete="off"
+              id="product-form"
+              name="addProductForm"
+              novalidate>
+              <input class="h-100 w-100 mb-2" disabled="disabled" form="product-form"
+                     id="new-order-warnings" name="warnings" placeholder="uwagi ..." type="text">
+              <input disabled="disabled" form="product-form" name="paymentType"
+                     placeholder="Płatność: przy odbiorze" value="przy odbiorze">
+              <button class="btn border-0 w-100 mt-2 btn-outline-success shadow-none" disabled="disabled"
+                      id="new-order-button"
+                      style="background-color: rgb(204,202,5);"
+                      type="submit">Zamów
+              </button>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-    </div>
-    </div>
-
-
-
-
-
-
-    <div class="container p-0">
+    <div class="container p-0" id="product-container">
       <div *ngIf="appComponent.isLoggedIn && appComponent.isClient" class="w-100 m-2 d-flex justify-content-center">
-        <select [(ngModel)]="categoryFilter" class="form-select w-25">
+        <select [(ngModel)]="categoryFilter" class="form-select w-25" id="select-category">
           <option selected></option>
           <option *ngFor="let category of categoriesList">{{category.name}}</option>
         </select>
       </div>
-
       <div class="row row-cols-1 row-cols-md-3">
         <div *ngFor="let product of productsList | filter:categoryFilter" class="col mb-4">
           <div class=" card-deck m-2 text-dark ">
-            <div class="card" id="{{product.productId}}">
-              <img alt="Card image cap" class="card-img-top" src="{{product.imgFileSrc}}" />
+            <div class="card shadow-lg" id="{{product.productId}}">
+              <img alt="Card image cap" class="card-img-top shadow-lg" src="{{product.imgFileSrc}}"
+                   style="height: 250px;"/>
               <div class="card-body">
                 <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
-                <p class="card-text">{{product.description}}</p>
+                <p class="card-text" style="height: 100px; overflow: auto;">{{product.description}}</p>
                 <p *ngIf="product.measureType.name == 'sztuk'" class="card-text"><small class="text-muted">
                   {{product.price}}zł /{{product.measureType.name}}a | Zostało <b>{{product.amount}}</b>
                   <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
@@ -85,7 +76,7 @@
               </div>
               <button (click)="addProductToShoppingCart($any($event.target))"
                       *ngIf="appComponent.isLoggedIn && appComponent.isClient && product.amount != 0"
-                      class="btn border-0 btn-outline-success shadow-none"
+                      class="btn border-0 btn-outline-success shadow-lg fw-bold"
                       id="add-product-button{{product.productId}}"
                       style="background-color: rgb(204,202,5);"
                       type="button">
