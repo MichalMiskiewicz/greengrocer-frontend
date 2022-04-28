@@ -121,7 +121,7 @@ export class ProductsComponent implements OnInit {
   addOrder(): void {
     let warningsInput = document.getElementById("new-order-warnings");
     this.newOrder.warnings = warningsInput.value;
-    this.newOrder.payment = {"name": "przy odbiorze"};
+    this.newOrder.payment = {"name": "gotówka"};
     this.newOrder.products = new Array(this.appComponent.shoppingCart.size);
     let l: number = 0;
     // @ts-ignore

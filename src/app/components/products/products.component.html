@@ -62,7 +62,7 @@
         <div *ngFor="let product of productsList | filter:categoryFilter" class="col mb-4">
           <div class=" card-deck m-2 text-dark ">
             <div class="card shadow-lg" id="{{product.productId}}">
-              <img alt="Card image cap" class="card-img-top shadow-lg" src="{{product.imgFileSrc}}"
+              <img id="product-img" alt="Card image cap" class="card-img-top shadow-lg" src="{{product.imgFileSrc}}"
                    style="height: 250px;"/>
               <div class="card-body">
                 <h5 class="card-title">{{product.name}} - {{product.category}}</h5>

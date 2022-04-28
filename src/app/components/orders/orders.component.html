@@ -1,15 +1,15 @@
-<div *ngIf="appComponent.isLoggedIn" class="d-flex flex-row mb-2 h-100">
-  <div id="order-card" class="d-flex p-2 w-100 justify-content-center" style="overflow-y: scroll;">
+<div *ngIf="appComponent.isLoggedIn" class="d-flex mb-2 h-100">
+  <div id="order-card" class="d-flex p-2 w-100 h-100 justify-content-center" style="overflow-y: scroll;">
 
-    <div id="orders-container" class="row w-100 h-25 container">
-      <div class="row row-cols-1 row-cols-md-2">
+    <div id="orders-container" class="w-100 h-25 container">
+      <div class=" row-cols-1 row-cols-md-2">
 
       <div *ngFor="let order of ordersList; let i=index"
            class="container bg-transparent p-0">
         <div class="col mb-1 m-1">
         <div
           *ngIf="appComponent.isLoggedIn && appComponent.isAdmin || appComponent.isDriver && order.status != 'Doręczone' || appComponent.isClient"
-          class="row w-100 mb-2 shadow-lg p-4 rounded" style="background-color: rgba(255,255,255,0.95)">
+          class=" w-100 mb-2 shadow-lg p-4 rounded" style="background-color: rgba(255,255,255,0.95)">
           <div class="d-flex justify-content-between">
             <div class="w-100">
               <div class="w-auto">
@@ -25,7 +25,7 @@
                 </a>
               </div>
             </div>
-            <div class="w-50 d-flex justify-content-end">
+            <div class="w-50 d-flex justify-content-end" id="order-buttons">
               <select (change)="setDriver($any($event.target).value)" *ngIf="!order.driver && appComponent.isAdmin"
                       class="form-select w-75 h-50">
                 <option selected>Kierowca</option>
