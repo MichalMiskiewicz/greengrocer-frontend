@@ -1,91 +1,97 @@
 <div *ngIf="appComponent.isLoggedIn" class="d-flex mb-2 h-100">
-  <div id="order-card" class="d-flex p-2 w-100 h-100 justify-content-center" style="overflow-y: scroll;">
+  <div class="d-flex p-2 w-100 h-100 justify-content-center" id="order-card" style="overflow-y: scroll;">
 
-    <div id="orders-container" class="w-100 h-25 container">
+    <div class="w-100 h-25 container" id="orders-container">
       <div class=" row-cols-1 row-cols-md-2">
 
-      <div *ngFor="let order of ordersList; let i=index"
-           class="container bg-transparent p-0">
-        <div class="col mb-1 m-1">
-        <div
-          *ngIf="appComponent.isLoggedIn && appComponent.isAdmin || appComponent.isDriver && order.status != 'Doręczone' || appComponent.isClient"
-          class=" w-100 mb-2 shadow-lg p-4 rounded" style="background-color: rgba(255,255,255,0.95)">
-          <div class="d-flex justify-content-between">
-            <div class="w-100">
-              <div class="w-auto">
-                <a class="text-success">{{createDate(order.creationDate)}}</a>
-              </div>
-              <div class="w-auto text-dark">
-                <a><h5>{{order.createdBy.name + ' ' + order.createdBy.surname}}</h5><h5>
-                  <b>
-                    <p class="mb-0">ul. {{order.createdBy.address.street + ' ' + order.createdBy.address.houseNumber }}</p>
-                    <p class="ms-3">{{order.createdBy.address.city + ' ' + order.createdBy.address.zipCode}}</p>
-                  </b>
-                </h5>
-                </a>
-              </div>
-            </div>
-            <div class="w-50 d-flex justify-content-end" id="order-buttons">
-              <select (change)="setDriver($any($event.target).value)" *ngIf="!order.driver && appComponent.isAdmin"
-                      class="form-select w-75 h-50">
-                <option selected>Kierowca</option>
-                <option *ngFor="let driver of driversList"
-                        [value]="order.orderId + '|' + driver.userId">{{driver.name + ' ' + driver.surname}}</option>
-              </select>
-              <button (click)="setOrderDelivered($any($event.target).id)" *ngIf="appComponent.isDriver"
-                      class="btn border-0 btn-outline-success shadow-none w-75 h-50"
-                      id="{{order.orderId}}" style="background-color: rgb(204,202,5);"
-                      type="button">
-                Dostarczone
-              </button>
-            </div>
-          </div>
-          <div [attr.aria-controls]="'id'+order.orderId"
-               [attr.data-bs-target]="'#id'+order.orderId"
-               aria-expanded="false"
-               class="btn w-50 h-25 p-1 mt-2 shadow-lg rounded"
-               data-bs-toggle="collapse" style="background-color: rgb(204,202,5);">
-          </div>
-          <div class="collapse " id="id{{order.orderId}}">
-            <div class="card card-body">
-              <div class="row ">
-                <div class="col-14 p-0">
-                  <div style="overflow: auto; height: 80px;">
-                  <ul *ngFor="let products of order.products" class="list-group w-100 m-0 p-0">
-                    <li
-                      class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom">
-                      {{products.product.name}}
-                      <span *ngIf="products.product.measureType.name == 'sztuk'" class="badge badge-square bg-info slide-in-right text-end" style="width: auto;">{{products.amount + ' szt. x ' + products.product.price}}
-                        zł = {{products.amount * products.product.price}} zł</span>
-                   <span *ngIf="products.product.measureType.name != 'sztuk'" class="badge badge-square bg-info slide-in-right text-end" style="width: auto;">{{products.amount + ' ' + products.product.measureType.name + ' x ' + products.product.price}}
-                        zł = {{products.amount * products.product.price}} zł</span>
-                    </li>
-                  </ul>
+        <div *ngFor="let order of ordersList; let i=index"
+             class="container bg-transparent p-0">
+          <div class="col mb-1 m-1">
+            <div
+              *ngIf="appComponent.isLoggedIn && appComponent.isAdmin || appComponent.isDriver && order.status != 'Doręczone' || appComponent.isClient"
+              class=" w-100 mb-2 shadow-lg p-4 rounded" style="background-color: rgba(255,255,255,0.95)">
+              <div class="d-flex justify-content-between">
+                <div class="w-100">
+                  <div class="w-auto">
+                    <a class="text-success">{{createDate(order.creationDate)}}</a>
                   </div>
-                  <div style="height: 20%;">
-                  <span class="badge badge-square w-100 text-end text-dark"><a
-                    class="text-info"><h4>SUMA: {{orderSumList[i]}} zł</h4></a></span>
+                  <div class="w-auto text-dark">
+                    <a><h5>{{order.createdBy.name + ' ' + order.createdBy.surname}}</h5>
+                      <h5>
+                        <b>
+                          <p class="mb-0">
+                            ul. {{order.createdBy.address.street + ' ' + order.createdBy.address.houseNumber }}</p>
+                          <p class="ms-3">{{order.createdBy.address.city + ' ' + order.createdBy.address.zipCode}}</p>
+                        </b>
+                      </h5>
+                    </a>
                   </div>
                 </div>
+                <div class="w-50 d-flex justify-content-end" id="order-buttons">
+                  <select (change)="setDriver($any($event.target).value)" *ngIf="!order.driver && appComponent.isAdmin"
+                          class="form-select w-75 h-50">
+                    <option selected>Kierowca</option>
+                    <option *ngFor="let driver of driversList"
+                            [value]="order.orderId + '|' + driver.userId">{{driver.name + ' ' + driver.surname}}</option>
+                  </select>
+                  <button (click)="setOrderDelivered($any($event.target).id)" *ngIf="appComponent.isDriver"
+                          class="btn border-0 btn-outline-success shadow-none w-75 h-50"
+                          id="{{order.orderId}}" style="background-color: rgb(204,202,5);"
+                          type="button">
+                    Dostarczone
+                  </button>
+                </div>
               </div>
-              <div class="row "style="height: 50%;">
-                <div *ngIf="order.warnings" class="col-12 text-danger fw-bold">{{order.warnings}}</div>
-                <div *ngIf="!order.warnings" class="col-12 ">brak uwag</div>
+              <div [attr.aria-controls]="'id'+order.orderId"
+                   [attr.data-bs-target]="'#id'+order.orderId"
+                   aria-expanded="false"
+                   class="btn w-50 h-25 p-1 mt-2 shadow-lg rounded"
+                   data-bs-toggle="collapse" style="background-color: rgb(204,202,5);">
               </div>
-              <div class="row" style="background-color: rgb(204,202,5);">
-                <div *ngIf="order.driver"
-                     class="col-4 border-end">{{order.driver.name + ' ' + order.driver.surname}}</div>
-                <div *ngIf="!order.driver" class="col-4 border-end">brak</div>
-                <div class="col-3 border-end">{{order.payment.name}}</div>
-                <div *ngIf="order.status" class="col-5">{{order.status}}</div>
-                <div *ngIf="!order.status" class="col-5">brak statusu</div>
+              <div class="collapse " id="id{{order.orderId}}">
+                <div class="card card-body">
+                  <div class="row ">
+                    <div class="col-14 p-0">
+                      <div style="overflow: auto; height: 80px;">
+                        <ul *ngFor="let products of order.products" class="list-group w-100 m-0 p-0">
+                          <li
+                            class="list-group-item d-flex justify-content-between align-items-center border-1 border-bottom">
+                            {{products.product.name}}
+                            <span *ngIf="products.product.measureType.name == 'sztuk'"
+                                  class="badge badge-square bg-info slide-in-right text-end"
+                                  style="width: auto;">{{products.amount + ' szt. x ' + products.product.price}}
+                              zł = {{products.amount * products.product.price}} zł</span>
+                            <span *ngIf="products.product.measureType.name != 'sztuk'"
+                                  class="badge badge-square bg-info slide-in-right text-end"
+                                  style="width: auto;">{{products.amount + ' ' + products.product.measureType.name + ' x ' + products.product.price}}
+                              zł = {{products.amount * products.product.price}} zł</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div style="height: 20%;">
+                  <span class="badge badge-square w-100 text-end text-dark"><a
+                    class="text-info"><h4>SUMA: {{orderSumList[i]}} zł</h4></a></span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row " style="height: 50%;">
+                    <div *ngIf="order.warnings" class="col-12 text-danger fw-bold">{{order.warnings}}</div>
+                    <div *ngIf="!order.warnings" class="col-12 ">brak uwag</div>
+                  </div>
+                  <div class="row" style="background-color: rgb(204,202,5);">
+                    <div *ngIf="order.driver"
+                         class="col-4 border-end">{{order.driver.name + ' ' + order.driver.surname}}</div>
+                    <div *ngIf="!order.driver" class="col-4 border-end">brak</div>
+                    <div class="col-3 border-end">{{order.payment.name}}</div>
+                    <div *ngIf="order.status" class="col-5">{{order.status}}</div>
+                    <div *ngIf="!order.status" class="col-5">brak statusu</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   </div>
 </div>

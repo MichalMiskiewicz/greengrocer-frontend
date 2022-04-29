@@ -45,7 +45,7 @@ export class ProductsComponent implements OnInit {
       productsList.forEach((value: any) => {
         value.imgFileSrc = '.\\assets' + value.imgFileSrc.split('assets')[1];
       });
-      this.productsList = productsList;
+      this.productsList = productsList.sort((v1: { amount: number; }, v2: { amount: number; }) => v2.amount - v1.amount);
     });
   }
 
@@ -125,9 +125,25 @@ export class ProductsComponent implements OnInit {
     let productAmount = item.children[0].value;
     this.apiClientService.setProductAmount(productId, productAmount).subscribe(product => {
       window.location.reload();
-    },error => {
+    }, error => {
       alert("Nie udało się zaktualizować ilości produktu!");
     });
+  }
+
+  disableProduct(item: any): void {
+    let productAmount = item.parentElement.children[3].children[2].children[0].children[1].innerText;
+    if (item.parentElement.children[3].children[2].children[0].children[1].innerText === " sztuk") {
+      productAmount = item.parentElement.children[3].children[2].children[0].children[0].innerText
+    }
+
+    let productId = item.parentElement.id;
+    if (productAmount > 0) {
+      this.apiClientService.setProductAmount(productId, +(-productAmount)).subscribe(product => {
+        window.location.reload();
+      }, error => {
+        alert("Nie udało się zaktualizować ilości produktu!");
+      });
+    }
   }
 
   addOrder(): void {

@@ -70,6 +70,11 @@ export class GreengrocerApiClientService {
     );
   }
 
+  /*deleteProduct(productId: string): Observable<any> {
+    return this.httpClient.patch(API_URL + 'products/delete/' + productId, {}, this.httpOptions
+    );
+  }*/
+
   postNewProduct(newProduct: NewProductDTO): Observable<any> {
     return this.httpClient.post(API_URL + 'products/add', newProduct, this.httpOptions
     );

@@ -64,7 +64,8 @@
       </div>
       <div class="row row-cols-1 row-cols-md-3">
         <div *ngFor="let product of productsList | filter:categoryFilter" class="col mb-4">
-          <div class=" card-deck m-2 text-dark ">
+          <div *ngIf="appComponent.isClient && product.amount > 0 || appComponent.isAdmin"
+               class=" card-deck m-2 text-dark ">
             <div class="card shadow-lg" id="{{product.productId}}">
               <img alt="Card image cap" class="card-img-top shadow-lg" id="product-img" src="{{product.imgFileSrc}}"
                    style="height: 250px;"/>
@@ -76,6 +77,15 @@
                     novalidate style="position: absolute; left: 10px; top:10px;">
                 <input name="product-amount" style="width: 30% !important;" type="number" value="0"/>
                 <input hidden type="submit"/>
+              </form>
+              <form (submit)="disableProduct($event.target)"
+                    *ngIf="appComponent.isLoggedIn && appComponent.isAdmin"
+                    autocomplete="off"
+                    id="product-delete-form"
+                    name="updateDeleteForm"
+                    novalidate style="position: absolute; right: 10px; top:10px;">
+                <input class="bg-danger border-0" name="product-delete" style="width: 30px !important;" type="submit"
+                       value="X"/>
               </form>
               <div class="card-body">
                 <h5 class="card-title">{{product.name}} - {{product.category}}</h5>

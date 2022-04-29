@@ -68,7 +68,9 @@ export class OrdersComponent implements OnInit {
 
   getListOfOrders(): void {
     this.apiClientService.getAllOrders().subscribe(ordersList => {
-      this.ordersList = ordersList;
+      this.ordersList = ordersList.sort((v1: { creationDate: string | number | Date; }, v2: { creationDate: string | number | Date; }) => {
+        return +new Date(v2.creationDate) - +new Date(v1.creationDate);
+      });
 
       let l: number = 0;
       this.orderSumList = new Array(this.ordersList.size);
