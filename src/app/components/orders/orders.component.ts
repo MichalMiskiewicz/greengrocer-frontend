@@ -28,7 +28,7 @@ export class OrdersComponent implements OnInit {
       switch (this.tokenStorage.getUserType()) {
         case "Admin": {
           document.querySelectorAll(".nav-item > a")!.item(1)!.className = "nav-link text-light active";
-          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
           document.querySelectorAll(".nav-item > a")!.item(1)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfOrders();
           this.getListOfDrivers();
@@ -36,14 +36,14 @@ export class OrdersComponent implements OnInit {
         }
         case "Klient": {
           document.querySelectorAll(".nav-item > a")!.item(1)!.className = "nav-link text-light active";
-          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(1)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
           document.querySelectorAll(".nav-item > a")!.item(1)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfClientsOrders();
           break;
         }
         case "Kierowca": {
           document.querySelectorAll(".nav-item > a")!.item(0)!.className = "nav-link text-light active";
-          document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important;");
+          document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
           document.querySelectorAll(".nav-item > a")!.item(0)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
           this.getListOfDriversOrders();
           break;

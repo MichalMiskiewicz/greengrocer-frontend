@@ -32,9 +32,9 @@ export class SignUpComponent implements OnInit {
       } else {
         this.newUser.userType = "Kierowca";
       }
-      if(this.tokenStorage.getUserType() === 'Admin'){
-        document.querySelectorAll(".nav-item > a")!.item(3)!.className = "nav-link text-light active";
-        document.querySelectorAll(".nav-item > a")!.item(3)!.setAttribute("style", "border-bottom: none !important;");
+      if (this.tokenStorage.getUserType() === 'Admin') {
+        document.querySelectorAll(".nav-item > a")!.item(3)!.className = "nav-link active";
+        document.querySelectorAll(".nav-item > a")!.item(3)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
         document.querySelectorAll(".nav-item > a")!.item(3)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
       }
     } else {
@@ -43,14 +43,28 @@ export class SignUpComponent implements OnInit {
   }
 
   signUp(): void {
+    document.getElementById("register-password")!.setCustomValidity("");
     if (document.getElementById("sign-up-form").checkValidity()) {
       console.log(JSON.stringify(this.newUser));
-      this.apiClientService.postNewUser(this.newUser).subscribe(user => {
-        console.log(user);
-      });
-      if (!this.tokenStorage.getToken()) {
-        window.location.replace('');
+      if (this.newUser.password.match(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9]{8,})$/)) {
+        this.apiClientService.postNewUser(this.newUser).subscribe({
+          next: data => {
+            console.log(data);
+            if (!this.tokenStorage.getToken()) {
+              window.location.replace('');
+            } else {
+              window.location.reload();
+            }
+          },
+          error: err => {
+            alert("Użytkownik o takiej nazwie już istnieje!");
+          }
+        });
+      } else {
+        document.getElementById("register-password")!.setCustomValidity("sdsd");
+        document.getElementById("register-password-invalid")!.innerText = "Słabe hasło!";
       }
+
     }
   }
 

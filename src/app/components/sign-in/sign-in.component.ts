@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../services/auth.service";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {AppComponent} from "../../app.component";
@@ -11,14 +11,14 @@ import {document} from "ngx-bootstrap/utils";
 })
 export class SignInComponent implements OnInit {
 
-  loginDetails:any ={};
+  loginDetails: any = {};
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
   roles: string[] = [];
-  appComponent:AppComponent;
+  appComponent: AppComponent;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, appComponent:AppComponent) {
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, appComponent: AppComponent) {
     this.appComponent = appComponent;
   }
 
@@ -29,16 +29,18 @@ export class SignInComponent implements OnInit {
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
-      if(this.appComponent.isAdmin || this.appComponent.isClient)
+      if (this.appComponent.isAdmin || this.appComponent.isClient)
         window.location.replace('products');
-      else{
+      else {
         window.location.replace('orders');
       }
     }
   }
 
   onSubmit(): void {
-    if(document.getElementById("sign-in-form").checkValidity()) {
+    document.getElementById("login-password")!.setCustomValidity("");
+    document.getElementById("login-username")!.setCustomValidity("");
+    if (document.getElementById("sign-in-form").checkValidity()) {
       this.authService.login(this.loginDetails).subscribe({
         next: data => {
           console.log(data);
@@ -51,16 +53,13 @@ export class SignInComponent implements OnInit {
           window.location.replace('');
         },
         error: err => {
-          this.errorMessage = err.error.message;
-          this.isLoginFailed = true;
+          //alert("Błędny login lub hasło!");
+          document.getElementById("login-password")!.setCustomValidity("błędne hasło");
+          document.getElementById("login-username")!.setCustomValidity("błędna nazwa użytkownika");
+          document.getElementById("login-password-invalid")!.innerText = "lub hasło!";
+          document.getElementById("login-username-invalid")!.innerText = "Błedna nazwa użytkownika";
         }
       });
     }
-
-
-  }
-
-  reloadPage(): void {
-    window.location.reload();
   }
 }

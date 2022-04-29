@@ -32,7 +32,7 @@ export class ProductsComponent implements OnInit {
       this.appComponent.shoppingCartActive = true;
       this.appComponent.sumCart.toFixed(2);
       document.querySelectorAll(".nav-item > a")!.item(0)!.className = "nav-link text-light active";
-      document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important;");
+      document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
       document.querySelectorAll(".nav-item > a")!.item(0)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
     } else {
       window.location.replace('');
@@ -146,7 +146,7 @@ export class ProductsComponent implements OnInit {
       //console.log(order);
     })
     this.newOrder.clear;
-    window.location.reload();
+    //window.location.reload();
 
   }
 

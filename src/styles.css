@@ -17,6 +17,7 @@ html {
 
 .active {
   background-color: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgb(204,202,5);
 }
 
 .nav-tabs {
@@ -24,12 +25,13 @@ html {
 }
 
 .nav-item {
-  border-bottom: 1px white solid;
+  border-bottom: 1px rgb(204,202,5) solid;
 }
 
 
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   border-bottom: none !important;
+  border-color: rgb(204,202,5) !important;
 }
 
 body {
@@ -118,6 +120,10 @@ body {
 
   #product-container > div.row > * {
     padding: 0 !important;
+  }
+
+  #search > input.w-25{
+    width: auto !important;
   }
 
   html {

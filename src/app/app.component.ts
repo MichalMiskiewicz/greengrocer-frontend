@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {TokenStorageService} from "../services/token-storage.service";
+import {stringify} from "@angular/compiler/src/util";
 
 @Component({
   selector: 'app-root',
@@ -58,18 +59,20 @@ export class AppComponent {
 
   makeActive(item: any): void {
     document.querySelectorAll(".nav-item > a")!.forEach(it => {
-      it.className = "nav-link text-light";
+      it.className = "nav-link";
+      it.setAttribute("style", "color: white !important;");
       // @ts-ignore
-      it.parentElement.setAttribute("style", "border-bottom: 1px white solid;");
+      it.parentElement.setAttribute("style", "border-bottom: 1px rgb(204,202,5) solid;");
       // @ts-ignore
       it.parentElement.className = "nav-item";
     })
-    item.className = "nav-link text-light active";
+    item.className = "nav-link active";
+    item.setAttribute("style", "color: rgb(204,202,5) !important;");
     item.parentElement.setAttribute("style", "border-bottom: none !important;");
   }
 
   logout(): void {
-    document.getElementById("sign-out-button")!.innerText="Wylogowywanie...";
+    document.getElementById("sign-out-button")!.innerText = "Wylogowywanie...";
     this.tokenStorage.signOut();
   }
 }

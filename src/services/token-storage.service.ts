@@ -14,32 +14,32 @@ export class TokenStorageService {
   }
 
   signOut(): void {
-    window.sessionStorage.clear();
+    localStorage.clear();
     window.location.replace('');
   }
 
   public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.setItem(TOKEN_KEY, token);
   }
 
   public saveUser(username: string): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, username);
+    localStorage.removeItem(USER_KEY);
+    localStorage.setItem(USER_KEY, username);
   }
 
   public saveUserType(userType: string): void {
-    window.sessionStorage.removeItem(USER_TYPE);
-    window.sessionStorage.setItem(USER_TYPE, userType);
+    localStorage.removeItem(USER_TYPE);
+    localStorage.setItem(USER_TYPE, userType);
   }
 
   public saveUserID(id: string): void {
-    window.sessionStorage.removeItem(USER_ID);
-    window.sessionStorage.setItem(USER_ID, id);
+    localStorage.removeItem(USER_ID);
+    localStorage.setItem(USER_ID, id);
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    const user = localStorage.getItem(USER_KEY);
     if (user) {
       return user;
     }
@@ -47,14 +47,14 @@ export class TokenStorageService {
   }
 
   public getToken(): string | null {
-    return window.sessionStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(TOKEN_KEY);
   }
 
   public getUserId(): string | null {
-    return window.sessionStorage.getItem(USER_ID);
+    return localStorage.getItem(USER_ID);
   }
 
   public getUserType(): string | null {
-    return window.sessionStorage.getItem(USER_TYPE);
+    return localStorage.getItem(USER_TYPE);
   }
 }

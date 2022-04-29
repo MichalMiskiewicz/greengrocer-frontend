@@ -71,6 +71,7 @@ export class GreengrocerApiClientService {
   }
 
   postNewOrder(newOrder: NewOrderDTO): Observable<any> {
+    console.log(JSON.stringify(newOrder));
     return this.httpClient.post(API_URL + 'orders/add/' + this.tokenStorage.getUserId(), newOrder, this.httpOptions
     );
   }
