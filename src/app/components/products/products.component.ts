@@ -120,6 +120,16 @@ export class ProductsComponent implements OnInit {
     return this.productsList.find(((p: { productId: string; }) => p.productId == id));
   }
 
+  updateAmount(item: any): void {
+    let productId = item.parentElement.id;
+    let productAmount = item.children[0].value;
+    this.apiClientService.setProductAmount(productId, productAmount).subscribe(product => {
+      window.location.reload();
+    },error => {
+      alert("Nie udało się zaktualizować ilości produktu!");
+    });
+  }
+
   addOrder(): void {
     let warningsInput = document.getElementById("new-order-warnings");
     this.newOrder.warnings = warningsInput.value;

@@ -55,7 +55,7 @@ export class AddProductComponent implements OnInit {
           });
         }
       },
-      err => alert(err));
+      err => alert("Brak zdjęcia!"));
   }
 
   imagePreview(e: Event) {

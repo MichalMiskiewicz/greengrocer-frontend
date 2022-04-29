@@ -68,26 +68,45 @@
             <div class="card shadow-lg" id="{{product.productId}}">
               <img alt="Card image cap" class="card-img-top shadow-lg" id="product-img" src="{{product.imgFileSrc}}"
                    style="height: 250px;"/>
+              <form (submit)="updateAmount($event.target)"
+                    *ngIf="appComponent.isLoggedIn && appComponent.isAdmin"
+                    autocomplete="off"
+                    id="product-amount-form"
+                    name="updateAmountForm"
+                    novalidate style="position: absolute; left: 10px; top:10px;">
+                <input name="product-amount" style="width: 30% !important;" type="number" value="0"/>
+                <input hidden type="submit"/>
+              </form>
               <div class="card-body">
                 <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
                 <p class="card-text" style="height: 100px; overflow: auto;">{{product.description}}</p>
                 <p *ngIf="product.measureType.name == 'sztuk'" class="card-text"><small class="text-muted">
                   {{product.price}}zł /{{product.measureType.name}}a | Zostało około <b>{{product.amount}}</b>
-                  <span *ngIf="product.measureType"> {{product.measureType.name}}</span>
-                  <span *ngIf="product.amount <= 20" class="bg-danger text-light p-1 ms-2"></span>
-                  <span *ngIf="product.amount > 20 && product.amount <= 40"
-                        class="bg-warning text-light p-1 ms-2"></span>
-                  <span *ngIf="product.amount > 40" class="bg-success text-light p-1 ms-2"></span>
-                </small></p>
+                  <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
                 <p *ngIf="product.measureType.name != 'sztuk'" class="card-text"><small class="text-muted">
                   {{product.price}}zł /{{product.measureType.name}} <b>|</b> Zostało około
                   <b>{{product.amount}}</b><span
-                  *ngIf="product.measureType"> {{product.measureType.name}}</span>
-                  <span *ngIf="product.amount <= 20" class="bg-danger text-light p-1 ms-2"></span>
-                  <span *ngIf="product.amount > 20 && product.amount <= 40"
-                        class="bg-warning text-light p-1 ms-2"></span>
-                  <span *ngIf="product.amount > 40" class="bg-success text-light p-1 ms-2"></span>
-                </small></p>
+                  *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
+                <div class="d-flex justify-content-end w-100">
+                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                  <div *ngIf="product.amount > 20 && product.amount <= 40" class="bg-warning w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                  <div *ngIf="product.amount > 20 && product.amount <= 40" class="bg-warning w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                  <div *ngIf="product.amount <= 20" class="bg-danger ms-2 w-25 h-25"
+                       style="height: 4px !important;">
+                  </div>
+                </div>
               </div>
               <button (click)="addProductToShoppingCart($any($event.target))"
                       *ngIf="appComponent.isLoggedIn && appComponent.isClient && product.amount != 0"
