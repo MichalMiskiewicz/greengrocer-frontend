@@ -97,25 +97,16 @@
                   {{product.price}}zł /{{product.measureType.name}} <b>|</b> Zostało około
                   <b>{{product.amount}}</b><span
                   *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
-                <div class="d-flex justify-content-end w-100">
-                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
-                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
-                  <div *ngIf="product.amount > 40" class="bg-success w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
-                  <div *ngIf="product.amount > 20 && product.amount <= 40" class="bg-warning w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
-                  <div *ngIf="product.amount > 20 && product.amount <= 40" class="bg-warning w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
-                  <div *ngIf="product.amount <= 20" class="bg-danger ms-2 w-25 h-25"
-                       style="height: 4px !important;">
-                  </div>
+                <div class="progress bg-transparent m-0 p-0" style="height: 4px !important;">
+                  <div *ngIf="product.amount > 40"
+                       aria-valuenow="product.amount" class="progress-bar progress-bar-striped progress-bar-animated bg-success"
+                       role="progressbar" style="width:{{product.amount}}%"></div>
+                  <div *ngIf="product.amount > 20 && product.amount <= 40"
+                       aria-valuenow="product.amount" class="progress-bar progress-bar-striped progress-bar-animated bg-warning"
+                       role="progressbar" style="width:{{product.amount}}%"></div>
+                  <div *ngIf="product.amount <= 20"
+                       aria-valuenow="product.amount" class="progress-bar progress-bar-striped progress-bar-animated bg-danger"
+                       role="progressbar" style="width:{{product.amount}}%"></div>
                 </div>
               </div>
               <button (click)="addProductToShoppingCart($any($event.target))"
