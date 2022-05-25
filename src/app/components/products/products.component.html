@@ -89,7 +89,7 @@
               </form>
               <div class="card-body">
                 <h5 class="card-title">{{product.name}} - {{product.category}}</h5>
-                <p class="card-text" style="height: 100px; overflow: auto;">{{product.description}}</p>
+                <p class="card-text" style="height: 100px; overflow: auto; line-height: 18px !important;">{{product.description}}</p>
                 <p *ngIf="product.measureType.name == 'sztuk'" class="card-text"><small class="text-muted">
                   {{product.price}}zł /{{product.measureType.name}}a | Zostało około <b>{{product.amount}}</b>
                   <span *ngIf="product.measureType"> {{product.measureType.name}}</span></small></p>
@@ -111,7 +111,7 @@
               </div>
               <button (click)="addProductToShoppingCart($any($event.target))"
                       *ngIf="appComponent.isLoggedIn && appComponent.isClient && product.amount != 0"
-                      class="btn border-0 btn-outline-success shadow-lg fw-bold"
+                      class="btn border-0 btn-outline-success shadow-lg fw-bold add-button"
                       id="add-product-button{{product.productId}}"
                       style="background-color: rgb(204,202,5);"
                       type="button">

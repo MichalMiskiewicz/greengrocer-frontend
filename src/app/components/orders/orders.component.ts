@@ -19,11 +19,10 @@ export class OrdersComponent implements OnInit {
 
   constructor(private apiClientService: GreengrocerApiClientService, appComponent: AppComponent, private tokenStorage: TokenStorageService) {
     this.appComponent = appComponent;
+    this.appComponent.shoppingCartActive = false;
   }
 
   ngOnInit(): void {
-    console.log(this.tokenStorage.getUser());
-    this.appComponent.shoppingCartActive = false;
     if (this.tokenStorage.getToken()) {
       switch (this.tokenStorage.getUserType()) {
         case "Admin": {

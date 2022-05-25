@@ -31,7 +31,6 @@ export class AppComponent {
     this.isLoggedIn = !!this.tokenStorage.getToken();
     if (this.isLoggedIn) {
       let user = this.tokenStorage.getUserType();
-      console.log(user)
       if (user === "Admin") {
         this.isAdmin = true;
       } else if (user === "Kierowca") {
@@ -52,7 +51,6 @@ export class AppComponent {
             event.stopPropagation()
           }
           form.classList.add('was-validated')
-          /*document.getElementById("sign-in-button")!.setAttribute("disabled", "disabled")*/
         }, false)
       })
   };

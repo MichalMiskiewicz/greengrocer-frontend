@@ -22,21 +22,20 @@
         <div class="card-body">
           <h5 class="card-title d-flex justify-content-between w-100">
             <div class="w-50 m-2">
-              <select [(ngModel)]="newProduct.category" class="form-select" name="category">
-                <option selected>Warzywa cebulowe</option>
-                <option></option>
+              <select [(ngModel)]="newProduct.category" class="form-select" name="category" (change)="choosedCategory($event.target)">
+                <option selected>Kategoria..</option>
+                <option *ngFor="let category of categoryList" id="{{category.categoryId}}">{{category.name}}</option>
               </select>
             </div>
             <div class="w-50  m-2">
               <select [(ngModel)]="newProduct.name" class="form-select" name="name">
-                <option selected>Czosnek pospolity</option>
-                <option>iiii</option>
+                <option selected>Nazwa..</option>
+                <option *ngFor="let product of productsList">{{product.productName}}</option>
               </select>
             </div>
           </h5>
           <textarea [(ngModel)]="newProduct.description"
-                    class="h-100 w-100  m-2" name="comment" name="description">opis ...
-                                </textarea>
+                    class="h-100 w-100  m-2" name="description" placeholder="opis.."></textarea>
           <div class="card-title d-flex justify-content-between w-100">
             <input [(ngModel)]="newProduct.price" aria-describedby="ss" class="form-control m-2" id="jakiesid"
                    name="price"

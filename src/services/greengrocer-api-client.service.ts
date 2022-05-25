@@ -49,13 +49,16 @@ export class GreengrocerApiClientService {
   }
 
   getAllCategories(): Observable<any> {
-    console.log(this.tokenStorage.getToken());
     return this.httpClient.get(API_URL + 'products/categories/all', this.httpOptions
     );
   }
 
+  getProductsByCategory(categoryId: string): Observable<any> {
+    return this.httpClient.get(API_URL + 'products/products-name/' + categoryId, this.httpOptions
+    );
+  }
+
   setDriverInTheOrder(orderId: string, driverId: string): Observable<any> {
-    console.log(this.tokenStorage.getToken());
     return this.httpClient.patch(API_URL + 'orders/' + orderId + '/driver-set/' + driverId, {}, this.httpOptions
     );
   }
@@ -81,7 +84,6 @@ export class GreengrocerApiClientService {
   }
 
   postNewOrder(newOrder: NewOrderDTO): Observable<any> {
-    console.log(JSON.stringify(newOrder));
     return this.httpClient.post(API_URL + 'orders/add/' + this.tokenStorage.getUserId(), newOrder, this.httpOptions
     );
   }
@@ -97,7 +99,6 @@ export class GreengrocerApiClientService {
   }
 
   postImage(img: File): Observable<any> {
-    console.log(img);
     let formData: any = new FormData();
     formData.append('file', img);
     return this.httpClient.post(API_URL + 'products/upload', formData, {

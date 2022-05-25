@@ -12,9 +12,12 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 export class AddProductComponent implements OnInit {
   public newProduct: any = {};
   public imgSrc = "";
+  public categoryList:any = {};
+  public productsList:any = {};
   filePath: string = "https://andrukiewicz.elk.pl/wp-content/uploads/2014/09/brak-1-Kopia-2.jpg";
   myForm: FormGroup;
   appComponent: AppComponent;
+
 
   constructor(private apiClientService: GreengrocerApiClientService, private tokenStorage: TokenStorageService, appComponent: AppComponent, public fb: FormBuilder) {
     this.appComponent = appComponent;
@@ -31,6 +34,7 @@ export class AddProductComponent implements OnInit {
       document.querySelectorAll(".nav-item > a")!.item(2)!.className = "nav-link text-light active";
       document.querySelectorAll(".nav-item > a")!.item(2)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
       document.querySelectorAll(".nav-item > a")!.item(2)!.parentElement!.setAttribute("style", "border-bottom: none !important;");
+      this.getListOfCategories();
     }
   }
 
@@ -72,6 +76,22 @@ export class AddProductComponent implements OnInit {
       this.filePath = reader.result as string;
     }
     reader.readAsDataURL(file)
+  }
+
+  getListOfCategories(): void {
+    this.apiClientService.getAllCategories().subscribe(categoryList => {
+      // @ts-ignore
+      console.log(Array.from(categoryList).sort((v1: { name: string; }, v2: { name: string; }) => v2.name - v1.name));
+      this.categoryList = categoryList.sort();
+      console.log(this.categoryList);
+    })
+  }
+
+  choosedCategory(event: any):void {
+    let categoryId = event.options[event.selectedIndex].id
+    this.apiClientService.getProductsByCategory(categoryId).subscribe(productsList => {
+      this.productsList = productsList;
+    })
   }
 
 }

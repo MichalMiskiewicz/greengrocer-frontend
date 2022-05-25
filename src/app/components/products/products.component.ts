@@ -4,6 +4,7 @@ import {AppComponent} from "../../app.component";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {DomSanitizer} from '@angular/platform-browser';
 import {document} from "ngx-bootstrap/utils";
+import {first} from "rxjs";
 
 @Component({
   selector: 'app-products',
@@ -18,18 +19,19 @@ export class ProductsComponent implements OnInit {
   show: boolean = true;
   newOrder: any = {};
   appComponent: AppComponent;
+  firstElement: string = "";
 
   // @ts-ignore
   constructor(private apiClientService: GreengrocerApiClientService,
               appComponent: AppComponent, private tokenStorage: TokenStorageService, public sanitizer: DomSanitizer) {
     this.appComponent = appComponent;
+    appComponent.shoppingCartActive = true;
   }
 
   ngOnInit(): void {
     if (this.tokenStorage.getToken()) {
       this.getListOfAllProducts();
       this.getListOfCategories();
-      this.appComponent.shoppingCartActive = true;
       this.appComponent.sumCart.toFixed(2);
       document.querySelectorAll(".nav-item > a")!.item(0)!.className = "nav-link text-light active";
       document.querySelectorAll(".nav-item > a")!.item(0)!.setAttribute("style", "border-bottom: none !important; color: rgb(204,202,5) !important;");
@@ -38,7 +40,6 @@ export class ProductsComponent implements OnInit {
       window.location.replace('');
     }
   }
-
 
   getListOfAllProducts(): void {
     this.apiClientService.getAllProducts().subscribe(productsList => {
