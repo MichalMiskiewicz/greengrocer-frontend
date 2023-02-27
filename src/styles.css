@@ -1,1 +1,227 @@
 /* You can add global styles to this file, and also import other style files */
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.row.no-gutter {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row.no-gutter [class*='col-']:not(:first-child),
+.row.no-gutter [class*='col-']:not(:last-child) {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.active {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  border-color: rgb(204,202,5);
+}
+
+.nav-tabs {
+  border-bottom: none !important;
+}
+
+.nav-item {
+  border-bottom: 1px rgb(204,202,5) solid;
+}
+
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+  border-bottom: none !important;
+  border-color: rgb(204,202,5) !important;
+}
+
+body {
+  /*background-color: rgb(204,202,5);
+  background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+  /*background-image: url("https://wallpaperaccess.com/full/1189785.jpg");*/
+  background-image: url(./assets/img/tlo3.jpg);
+  /*background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+
+  /*background: linear-gradient(329deg, rgba(251,251,251,0.9780287114845938) 11%, rgba(149,254,158,0.23853291316526615) 24%, rgba(255,189,103,0.4066001400560224) 32%, rgba(255,150,129,0.6895133053221288) 54%, rgba(183,255,168,0.37298669467787116) 83%, rgba(255,255,255,0.773546918767507) 94%);*/
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  /*background-color: rgb(204,202,5);*/
+  height: 90.9%;
+}
+
+#nav-menu {
+  height: 10%;
+  border-bottom: 8px #57731f solid !important;
+  border-bottom-left-radius: 20%;
+  border-bottom-right-radius: 20%;
+}
+
+/* Works on Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: black white;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+*::-webkit-scrollbar-track {
+  background-color: #57731f;
+}
+
+*::-webkit-scrollbar-thumb {
+  /*background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+  background-color: #354e1f;
+  border-radius: 5px;
+  /*border: 2px solid transparent;*/
+}
+
+@media (min-width: 768px) {
+  .navbar-nav.navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+  }
+
+  .row-cols-md-2 > * {
+    width: 80% !important;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  #sign-in-container, #sign-up-container {
+    height: 90vh !important;
+  }
+
+  #order-buttons > button.w-75 {
+    width: 100% !important;
+  }
+
+  #sign-up-form > div > button.w-25 {
+    width: 50% !important;
+  }
+
+  .container {
+    max-width: none !important;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  #order-card.p-2 {
+    padding: 0 !important;
+  }
+
+  #order-card.m-1 {
+    margin: 0 !important;
+  }
+
+  #product-container > div.row > * {
+    padding: 0 !important;
+  }
+
+  #search > input.w-25{
+    width: auto !important;
+  }
+
+  html {
+    height: auto;
+    min-height: 100%;
+    min-width: 100%;
+    width: fit-content;
+  }
+
+  nav {
+    width: 100%;
+  }
+
+  #product-container {
+    width: 90%;
+  }
+
+  #products {
+    overflow-y: hidden !important;
+  }
+
+  #select-category {
+    width: 60% !important;
+  }
+
+  #orders-container.row {
+    margin: 0;
+    padding: 0;
+  }
+
+  #orders-container {
+
+  }
+
+  #product-img {
+    height: 200px !important;
+  }
+
+  #order-card {
+    overflow-y: hidden !important;
+  }
+
+  html:has(>#signin-container) {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    height: auto;
+
+  }
+
+  #add-product-form {
+    width: 100% !important;
+  }
+
+  #create-user, #login-user {
+    width: 100% !important;
+    padding: 3rem 0 0 0 !important;
+    border-radius: 0 !important;
+  }
+
+  #create-user > div > form > div > div > div > span, #login-user > div > form > div > div > div > span {
+    width: 0 !important;
+  }
+
+  #create-user > div > form > div > div > div > span > i, #login-user > div > form > div > div > div > span > i {
+    color: rgb(204, 202, 5) !important;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: black white;
+  }
+
+  /* Works on Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 0.5rem;
+  }
+
+  *::-webkit-scrollbar-track {
+    background-color: #57731f;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    /*background: linear-gradient(180deg, rgba(204,202,5,0.41780462184873945) 5%, rgba(107,180,75,0.5186449579831933) 58%, rgba(255,255,255,1) 100%);*/
+    background-color: #354e1f;
+    border-radius: 5px;
+    /*border: 2px solid transparent;*/
+  }
+
+  #navbar-buttons {
+    width: 100% !important;
+  }
+
+  #shopping-cart {
+    width: 90% !important;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
+}
