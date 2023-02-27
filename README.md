@@ -1,27 +1,9 @@
 # GreengrocerFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
+![image](https://user-images.githubusercontent.com/72712409/221585393-a6ab01fa-6503-45d2-bfb6-6b636668b2c8.png)
 
-## Development server
+![image](https://user-images.githubusercontent.com/72712409/221585485-65b39c05-02ae-4d8d-85b6-586592e66378.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+![image](https://user-images.githubusercontent.com/72712409/221585520-d89f339e-9ef3-4ffd-97cb-c60b1ea76622.png)
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+![image](https://user-images.githubusercontent.com/72712409/221585547-f2e0a555-d2c5-4808-b3ba-2569f3eeb4b7.png)
